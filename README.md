@@ -17,6 +17,10 @@ E-mail : sales@regulus.com.tw
 http://www.regulus.com.tw/  
 ```
 
+## RZ/V2M start-up guide
+
+https://www.renesas.com/us/en/document/qsg/rzv2m-linux-start-guide-rev110?language=en&r=1320296
+
 ## RZ/V2M ISP support package release note
 
 https://www.renesas.com/us/en/document/rln/rzv2m-isp-support-package-version110-release-note
