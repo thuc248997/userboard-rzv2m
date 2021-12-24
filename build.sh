@@ -23,7 +23,7 @@ function print_boot_example() {
 	echo -e "${YELLOW} => setenv ethaddr 2E:09:0A:00:BE:11 ${NC}"
 	echo -e "${YELLOW} => setenv ipaddr $(echo ${IP_ADDR} | grep 192.168 | head -1 | awk -F '.' '{print $1 "." $2 "." $3}').133 ${NC}"
 	echo -e "${YELLOW} => setenv serverip ${IP_ADDR} ${NC}"
-	echo -e "${YELLOW} => setenv NFSROOT '${IP_ADDR}:$(pwd)/rootfs' ${NC}"
+	echo -e "${YELLOW} => setenv NFSROOT '\${serverip}:$(pwd)/rootfs' ${NC}"
 	echo -e "${YELLOW} => setenv core1_vector 0x01000000 ${NC}"
 	echo -e "${YELLOW} => setenv core1addr 0x01000000 ${NC}"
 	echo -e "${YELLOW} => setenv core1_firmware core1_firmware.bin ${NC}"
@@ -31,6 +31,7 @@ function print_boot_example() {
 	echo -e "${YELLOW} => setenv fdt_file r9a09g011gbg-evaluation-board.dtb ${NC}"
 	echo -e "${YELLOW} => setenv loadaddr 0x58080000 ${NC}"
 	echo -e "${YELLOW} => setenv kernel Image ${NC}"
+	echo -e "${YELLOW} => saveenv ${NC}"
 
 	echo -e "${YELLOW} => setenv bootnfs 'nfs \${loadaddr} \${NFSROOT}/boot/Image; nfs \${fdt_addr} \${NFSROOT}/boot/r9a09g011gbg-evaluation-board.dtb; nfs \${core1addr} \${NFSROOT}/boot/\${core1_firmware}; setenv bootargs rw rootwait earlycon root=/dev/nfs nfsroot=\${NFSROOT},nfsvers=3 ip=dhcp:rzv2m:eth0; booti \${loadaddr} - \${fdt_addr}' ${NC}"
 	echo -e "${YELLOW} => run bootnfs ${NC}"
