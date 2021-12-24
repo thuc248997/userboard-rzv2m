@@ -32,7 +32,7 @@ function print_boot_example() {
 	echo -e "${YELLOW} => setenv loadaddr 0x58080000 ${NC}"
 	echo -e "${YELLOW} => setenv kernel Image ${NC}"
 
-	echo -e "${YELLOW} => setenv bootnfs 'nfs \${loadaddr} \${NFSROOT}/boot/Image; nfs 0x48000000 \${NFSROOT}/boot/r9a09g011gbg-evaluation-board.dtb; nfs \${core1addr} \${NFSROOT}/boot/\${core1_firmware}; setenv bootargs rw rootwait earlycon root=/dev/nfs nfsroot=\${NFSROOT},nfsvers=3 ip=dhcp:rzv2m:eth0; booti \${loadaddr} - \${fdt_addr}' ${NC}"
+	echo -e "${YELLOW} => setenv bootnfs 'nfs \${loadaddr} \${NFSROOT}/boot/Image; nfs \${fdt_addr} \${NFSROOT}/boot/r9a09g011gbg-evaluation-board.dtb; nfs \${core1addr} \${NFSROOT}/boot/\${core1_firmware}; setenv bootargs rw rootwait earlycon root=/dev/nfs nfsroot=\${NFSROOT},nfsvers=3 ip=dhcp:rzv2m:eth0; booti \${loadaddr} - \${fdt_addr}' ${NC}"
 	echo -e "${YELLOW} => run bootnfs ${NC}"
 	echo ""
 
