@@ -1,6 +1,6 @@
 ## Introduction
 
-<img src="http://www.shimafuji.co.jp/wp/wp-content/uploads/2020/12/V2M-1.jpg" width="600" height="480" />
+<img src="https://renesas.info/w/images/2/29/RZV2M_EVK.jpg" />
 
 This repository is a Linux reference software for building core-image-bsp on Renesas RZ/V2M. 
 You have to get the proprietary software and hardware before building this REPO. Please contact for the following name card: 
