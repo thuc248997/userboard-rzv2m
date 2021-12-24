@@ -17,7 +17,7 @@ E-mail : sales@regulus.com.tw
 http://www.regulus.com.tw/  
 ```
 
-## RZ/V2M ISP support package releasenote
+## RZ/V2M ISP support package release note
 
 https://www.renesas.com/us/en/document/rln/rzv2m-isp-support-package-version110-release-note
 
