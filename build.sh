@@ -32,7 +32,7 @@ function print_boot_example() {
 	echo -e "${YELLOW} => setenv loadaddr 0x58080000 ${NC}"
 	echo -e "${YELLOW} => setenv kernel Image ${NC}"
 
-	echo -e "${YELLOW} => setenv bootnfs 'nfs 0x48080000 \${NFSROOT}/boot/Image; nfs 0x48000000 \${NFSROOT}/boot/r9a09g011gbg-evaluation-board.dtb; setenv bootargs rw rootwait earlycon root=/dev/nfs nfsroot=\${NFSROOT},nfsvers=3 ip=dhcp:rzv2m:eth0; booti 0x48080000 - 0x48000000' ${NC}"
+	echo -e "${YELLOW} => setenv bootnfs 'nfs \${loadaddr} \${NFSROOT}/boot/Image; nfs 0x48000000 \${NFSROOT}/boot/r9a09g011gbg-evaluation-board.dtb; nfs \${core1addr} \${NFSROOT}/boot/\${core1_firmware}; setenv bootargs rw rootwait earlycon root=/dev/nfs nfsroot=\${NFSROOT},nfsvers=3 ip=dhcp:rzv2m:eth0; booti \${loadaddr} - \${fdt_addr}' ${NC}"
 	echo -e "${YELLOW} => run bootnfs ${NC}"
 	echo ""
 
@@ -138,12 +138,10 @@ sed 's/master/main/' -i meta-openamp/recipes-openamp/open-amp/open-amp.inc
 #
 echo -e "${YELLOW}>> meta-userboard ${NC}"
 cd ${WORK}/build
-#${WORK}/poky/bitbake/bin/bitbake-layers add-layer ${WORK}/meta-userboard-rzv2m
 ${WORK}/poky/bitbake/bin/bitbake-layers show-layers
 
 ##########################################################
 #
-# PSEUDO_UNLOAD
 echo -e "${YELLOW}>> ${CORE_IMAGE} ${NC}"
 cd ${WORK}/build
 ${WORK}/poky/bitbake/bin/bitbake ${CORE_IMAGE} -v
@@ -165,6 +163,7 @@ if [ -d ${TFTPBOOT} -o -L ${TFTPBOOT} ]; then
         rm -rfv ${TFTPBOOT}/r9a*.dtb
 
         /bin/cp -Rpfv build/tmp/deploy/images/${MACHINE}/$(ls -l build/tmp/deploy/images/${MACHINE}/Image-${MACHINE}.bin | awk '{print $11}') ${TFTPBOOT}/Image
+	/bin/cp -Rpfv proprietary/core1_firmware.bin ${TFTPBOOT}/
         cd ${WORK}/build/tmp/deploy/images/${MACHINE}
         for D in $(ls -l r9a*.dtb | grep '\->' | awk '{print $9}' | xargs file | awk '{print $1}' | sed 's!:!!g'); do
                 L=${D}; S=$(file ${L} | awk '{print $5}')
@@ -183,6 +182,7 @@ sudo tar zxvf ${WORK}/build/tmp/deploy/images/${MACHINE}/${CORE_IMAGE}-${MACHINE
 sudo tar zxvf ${WORK}/build/tmp/deploy/images/${MACHINE}/modules-${MACHINE}.tgz -C ${WORK}/rootfs
 sudo /bin/cp -Rpfv build/tmp/deploy/images/${MACHINE}/$(ls -l build/tmp/deploy/images/${MACHINE}/modules-${MACHINE}.tgz | awk '{print $11}') ${WORK}/rootfs/boot/modules-${MACHINE}.tgz
 sudo /bin/cp -Rpfv build/tmp/deploy/images/${MACHINE}/$(ls -l build/tmp/deploy/images/${MACHINE}/${CORE_IMAGE}-${MACHINE}.tar.gz | awk '{print $11}') ${WORK}/rootfs/boot/${CORE_IMAGE}-${MACHINE}.tar.gz
+sudo /bin/cp -Rpfv proprietary/core1_firmware.bin ${WORK}/rootfs/boot/
 cd ${WORK}/build/tmp/deploy/images/${MACHINE}
 for D in $(ls -l r9a*.dtb | grep '\->' | awk '{print $9}' | xargs file | awk '{print $1}' | sed 's!:!!g'); do
 	L=${D}; S=$(file ${L} | awk '{print $5}')
