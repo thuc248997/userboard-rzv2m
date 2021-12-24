@@ -17,6 +17,16 @@ E-mail : sales@regulus.com.tw
 http://www.regulus.com.tw/  
 ```
 
+## RZ/V2M ISP support package release note
+
+https://www.renesas.com/us/en/document/rln/rzv2m-isp-support-package-version110-release-note
+
+
+## DRP-AI translator user manual
+
+https://www.renesas.com/us/en/document/mat/drp-ai-translator-v160-user-s-manual?language=en&r=1320296
+
+
 Maintainers
 -------------------------
 
