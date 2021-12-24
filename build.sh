@@ -149,6 +149,19 @@ ${WORK}/poky/bitbake/bin/bitbake ${CORE_IMAGE} -v
 
 ##########################################################
 #
+echo -e "${YELLOW}>> drp-ai_translator_release ${NC}"
+cd ${WORK}
+[ ! -d drp-ai_translator_release -a -x ./proprietary/DRP-AI_Translator-v1.60-Linux-x86_64-Install ] && echo y | ./proprietary/DRP-AI_Translator-v1.60-Linux-x86_64-Install
+cd ${WORK}/drp-ai_translator_release
+if [ -f UserConfig/addrmap_in_yolov2.yaml -a -f UserConfig/prepost_yolov2.yaml ]; then
+	echo -e "${YELLOW}>> yolov2 ${NC}"
+	rm -rfv output/yolov2
+	./run_DRP-AI_translator_V2M.sh yolov2 -onnx ./onnx/yolov2.onnx
+	ls -l output/yolov2
+fi
+
+##########################################################
+#
 echo -e "${YELLOW}>> sstate-cache-management.sh ${NC}"
 #cd ${WORK} && poky/scripts/sstate-cache-management.sh -d -y --cache-dir=build/sstate-cache
 
