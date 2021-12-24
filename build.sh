@@ -7,17 +7,19 @@ IP_ADDR=$(ip address | grep 192.168 | head -1 | awk '{print $2}' | awk -F '/' '{
 
 function print_boot_example() {
 	echo ""
-	echo ">> FOR MMC BOOT"
-	echo -e "${YELLOW} => setenv bootmmc 'setenv bootargs rw rootwait earlycon root=/dev/mmcblk0p2; fatload mmc 1:1 0x48080000 Image; fatload mmc 1:1 0x48000000 r9a09g011gbg-evaluation-board.dtb; booti 0x48080000 - 0x48000000' ${NC}"
-	echo -e "${YELLOW} => run bootmmc ${NC}"
-	echo ""
 	echo ">> FOR SD BOOT"
-	echo -e "${YELLOW} => setenv bootsd 'setenv bootargs rw rootwait earlycon root=/dev/mmcblk1p2; fatload mmc 0:1 0x48080000 Image; fatload mmc 0:1 0x48000000 r9a09g011gbg-evaluation-board.dtb; booti 0x48080000 - 0x48000000' ${NC}"
+	echo -e "${YELLOW} => setenv core1_vector 0x01000000 ${NC}"
+	echo -e "${YELLOW} => setenv core1addr 0x01000000 ${NC}"
+	echo -e "${YELLOW} => setenv core1_firmware core1_firmware.bin ${NC}"
+	echo -e "${YELLOW} => setenv fdt_addr 0x58000000 ${NC}"
+	echo -e "${YELLOW} => setenv fdt_file r9a09g011gbg-evaluation-board.dtb ${NC}"
+	echo -e "${YELLOW} => setenv kernel Image ${NC}"
+	echo -e "${YELLOW} => setenv bootargs 'rw rootwait earlycon root=/dev/mmcblk0p2' ${NC}"
+	echo -e "${YELLOW} => setenv bootsd 'fatload mmc 0:1 \${loadaddr} \${kernel}; fatload mmc 0:1 \${core1addr} \${core1_firmware}; fatload mmc 0:1 \${fdt_addr} \${fdt_file}; wakeup_a53core1 \${core1_vector}; booti \${loadaddr} - \${fdt_addr}' ${NC}"
+	echo -e "${YELLOW} => saveenv ${NC}"
 	echo -e "${YELLOW} => run bootsd ${NC}"
 	echo ""
-	echo ">> FOR USB BOOT"
-	echo -e "${YELLOW} => setenv bootusb 'setenv bootargs rw rootwait earlycon root=/dev/sda2; usb reset; fatload usb 0:1 0x48080000 Image; fatload usb 0:1 0x48000000 r9a09g011gbg-evaluation-board.dtb; booti 0x48080000 - 0x48000000' ${NC}"
-	echo -e "${YELLOW} => run bootusb ${NC}"
+
 	echo ""
 	echo ">> FOR NFS BOOT"
 	echo -e "${YELLOW} => setenv ethaddr 2E:09:0A:00:BE:11 ${NC}"
@@ -31,9 +33,9 @@ function print_boot_example() {
 	echo -e "${YELLOW} => setenv fdt_file r9a09g011gbg-evaluation-board.dtb ${NC}"
 	echo -e "${YELLOW} => setenv loadaddr 0x58080000 ${NC}"
 	echo -e "${YELLOW} => setenv kernel Image ${NC}"
+	echo -e "${YELLOW} => setenv bootargs 'rw rootwait earlycon root=/dev/nfs nfsroot=\${NFSROOT},nfsvers=3 ip=dhcp:rzv2m:eth0' ${NC}"
+	echo -e "${YELLOW} => setenv bootnfs 'nfs \${loadaddr} \${NFSROOT}/boot/\${kernel}; nfs \${fdt_addr} \${NFSROOT}/boot/r9a09g011gbg-evaluation-board.dtb; nfs \${core1addr} \${NFSROOT}/boot/\${core1_firmware}; wakeup_a53core1 \${core1_vector}; booti \${loadaddr} - \${fdt_addr}' ${NC}"
 	echo -e "${YELLOW} => saveenv ${NC}"
-
-	echo -e "${YELLOW} => setenv bootnfs 'nfs \${loadaddr} \${NFSROOT}/boot/Image; nfs \${fdt_addr} \${NFSROOT}/boot/r9a09g011gbg-evaluation-board.dtb; nfs \${core1addr} \${NFSROOT}/boot/\${core1_firmware}; setenv bootargs rw rootwait earlycon root=/dev/nfs nfsroot=\${NFSROOT},nfsvers=3 ip=dhcp:rzv2m:eth0; booti \${loadaddr} - \${fdt_addr}' ${NC}"
 	echo -e "${YELLOW} => run bootnfs ${NC}"
 	echo ""
 
@@ -219,7 +221,7 @@ if [ $(ls /dev/disk/by-id | grep SD_MMC | wc -l) -eq 0 \
         ls -ld --color build/tmp/deploy/images/${MACHINE}
         ls -l --color build/tmp/deploy/images/${MACHINE}
         echo ""
-        echo -e "${YELLOW}>> all succeeded ${NC}"
+        echo -e "${YELLOW}>> All succeeded. ${NC}"
 
         print_boot_example
         exit 0
