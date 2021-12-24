@@ -17,4 +17,12 @@ E-mail : sales@regulus.com.tw
 http://www.regulus.com.tw/  
 ```
 
+Maintainers
+-------------------------
+
+```
+Jason Chang <jason.chang@regulus.com.tw>
+```
+
+
 
