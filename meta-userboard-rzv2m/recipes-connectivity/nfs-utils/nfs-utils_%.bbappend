@@ -4,5 +4,5 @@ EXTRA_OECONF += " \
 "
 
 do_install_append () {
-	echo '/                     *(rw,sync,no_root_squash,no_subtree_check)' > ${D}${sysconfdir}/exports
+	echo '/                     *(rw,sync,no_root_squash,no_subtree_check,fsid=0)' > ${D}${sysconfdir}/exports
 }
