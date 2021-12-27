@@ -5,3 +5,4 @@ while [ 1 -eq 1 ]; do
 	./sample_app_tinyyolov2_cam_hdmi
 	sleep 1
 done
+
