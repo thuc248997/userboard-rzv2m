@@ -8,19 +8,22 @@ IP_ADDR=$(ip address | grep 192.168 | head -1 | awk '{print $2}' | awk -F '/' '{
 function print_boot_example() {
 	echo ""
 	echo ">> FOR SD BOOT"
+	echo -e "${YELLOW} => env default -a ${NC}"
 	echo -e "${YELLOW} => setenv core1_vector 0x01000000 ${NC}"
 	echo -e "${YELLOW} => setenv core1addr 0x01000000 ${NC}"
 	echo -e "${YELLOW} => setenv core1_firmware core1_firmware.bin ${NC}"
 	echo -e "${YELLOW} => setenv fdt_addr 0x58000000 ${NC}"
 	echo -e "${YELLOW} => setenv fdt_file r9a09g011gbg-evaluation-board.dtb ${NC}"
 	echo -e "${YELLOW} => setenv kernel Image ${NC}"
-	echo -e "${YELLOW} => setenv bootargs rw rootwait earlycon root=/dev/mmcblk0p2 ${NC}"
-	echo -e "${YELLOW} => setenv bootsd 'fatload mmc 0:1 \${loadaddr} \${kernel}; fatload mmc 0:1 \${core1addr} \${core1_firmware}; fatload mmc 0:1 \${fdt_addr} \${fdt_file}; wakeup_a53core1 \${core1_vector}; booti \${loadaddr} - \${fdt_addr}' ${NC}"
+	echo -e "${YELLOW} => setenv bootargs_sd setenv bootargs rw rootwait earlycon root=/dev/mmcblk0p2 ${NC}"
+	echo -e "${YELLOW} => setenv bootsd 'run bootargs_sd; fatload mmc 0:1 \${loadaddr} \${kernel}; fatload mmc 0:1 \${core1addr} \${core1_firmware}; fatload mmc 0:1 \${fdt_addr} \${fdt_file}; wakeup_a53core1 \${core1_vector}; booti \${loadaddr} - \${fdt_addr}' ${NC}"
+	echo -e "${YELLOW} => setenv bootcmd run bootsd ${NC}"
 	echo -e "${YELLOW} => saveenv ${NC}"
 	echo -e "${YELLOW} => run bootsd ${NC}"
 
 	echo ""
 	echo ">> FOR NFS BOOT"
+	echo -e "${YELLOW} => env default -a ${NC}"
 	echo -e "${YELLOW} => setenv ethaddr 2E:09:0A:00:BE:11 ${NC}"
 	echo -e "${YELLOW} => setenv ipaddr $(echo ${IP_ADDR} | grep 192.168 | head -1 | awk -F '.' '{print $1 "." $2 "." $3}').133 ${NC}"
 	echo -e "${YELLOW} => setenv serverip ${IP_ADDR} ${NC}"
@@ -32,8 +35,9 @@ function print_boot_example() {
 	echo -e "${YELLOW} => setenv loadaddr 0x58080000 ${NC}"
 	echo -e "${YELLOW} => setenv kernel Image ${NC}"
 	echo -e "${YELLOW} => setenv NFSROOT \${serverip}:$(pwd)/rootfs ${NC}"
-	echo -e "${YELLOW} => setenv bootargs rw rootwait root=/dev/nfs nfsroot=\${NFSROOT},nfsvers=3 ip=dhcp ${NC}"
-	echo -e "${YELLOW} => setenv bootnfs 'nfs \${loadaddr} \${NFSROOT}/boot/\${kernel}; nfs \${fdt_addr} \${NFSROOT}/boot/r9a09g011gbg-evaluation-board.dtb; nfs \${core1addr} \${NFSROOT}/boot/\${core1_firmware}; wakeup_a53core1 \${core1_vector}; booti \${loadaddr} - \${fdt_addr}' ${NC}"
+	echo -e "${YELLOW} => setenv bootargs_nfs 'setenv bootargs rw rootwait root=/dev/nfs nfsroot=\${NFSROOT},nfsvers=3 ip=dhcp' ${NC}"
+	echo -e "${YELLOW} => setenv download_nfs 'nfs \${loadaddr} \${NFSROOT}/boot/\${kernel}; nfs \${fdt_addr} \${NFSROOT}/boot/r9a09g011gbg-evaluation-board.dtb; nfs \${core1addr} \${NFSROOT}/boot/\${core1_firmware};' ${NC}"
+	echo -e "${YELLOW} => setenv bootnfs 'run bootargs_nfs; run download_nfs; wakeup_a53core1 \${core1_vector}; booti \${loadaddr} - \${fdt_addr}' ${NC}"
 	echo -e "${YELLOW} => saveenv ${NC}"
 	echo -e "${YELLOW} => run bootnfs ${NC}"
 	echo ""
@@ -173,7 +177,7 @@ ${WORK}/poky/bitbake/bin/bitbake-layers show-layers
 #
 echo -e "${YELLOW}>> ${CORE_IMAGE} ${NC}"
 cd ${WORK}/build
-${WORK}/poky/bitbake/bin/bitbake app-tinyyolov2-cam-hdmi -v -c cleanall
+${WORK}/poky/bitbake/bin/bitbake app-tinyyolov2-cam-hdmi -v -c cleansstate
 ${WORK}/poky/bitbake/bin/bitbake ${CORE_IMAGE} -v
 
 ##########################################################
@@ -315,6 +319,7 @@ sudo mount -t vfat ${SDDEV}1 mnt
 sudo rm -rfv ./mnt/*
 sudo /bin/cp build/tmp/deploy/images/${MACHINE}/$(ls -l build/tmp/deploy/images/${MACHINE}/Image | awk '{print $11}') mnt/Image
 sudo /bin/cp build/tmp/deploy/images/${MACHINE}/r9*.dtb mnt/
+sudo /bin/cp proprietary/core1_firmware.bin mnt/
 sudo /bin/cp build/tmp/deploy/images/${MACHINE}/$(ls -l build/tmp/deploy/images/${MACHINE}/modules-${MACHINE}.tgz | awk '{print $11}') mnt/modules-${MACHINE}.tgz
 sudo umount mnt
 
