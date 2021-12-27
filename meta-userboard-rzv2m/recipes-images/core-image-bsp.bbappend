@@ -1,4 +1,5 @@
 
+IMAGE_INSTALL_append = " drm2png"
 IMAGE_INSTALL_append = " demo-mp3 demo-videos"
 IMAGE_INSTALL_append = " nfs-utils"
 

@@ -18,7 +18,6 @@ function print_boot_example() {
 	echo -e "${YELLOW} => setenv bootsd 'fatload mmc 0:1 \${loadaddr} \${kernel}; fatload mmc 0:1 \${core1addr} \${core1_firmware}; fatload mmc 0:1 \${fdt_addr} \${fdt_file}; wakeup_a53core1 \${core1_vector}; booti \${loadaddr} - \${fdt_addr}' ${NC}"
 	echo -e "${YELLOW} => saveenv ${NC}"
 	echo -e "${YELLOW} => run bootsd ${NC}"
-	echo ""
 
 	echo ""
 	echo ">> FOR NFS BOOT"
@@ -38,8 +37,6 @@ function print_boot_example() {
 	echo -e "${YELLOW} => saveenv ${NC}"
 	echo -e "${YELLOW} => run bootnfs ${NC}"
 	echo ""
-
-# sysbench --test=fileio --num-threads=20 --file-total-size=1G --file-test-mode=rndrw prepare && sysbench --test=fileio --num-threads=20 --file-total-size=1G --file-test-mode=rndrw run && sysbench --test=fileio --num-threads=20 --file-total-size=1G --file-test-mode=rndrw cleanup
 }
 
 CORE_IMAGE=core-image-bsp
@@ -138,18 +135,26 @@ sed 's/master/main/' -i meta-openamp/recipes-openamp/open-amp/open-amp.inc
 
 ##########################################################
 #
+cd ${WORK}
+echo -e "${YELLOW}>> rzv2m_drpai-sample-application ${NC}"
+[ ! -d rzv2m_drpai-sample-application_ver5.00/app_tinyyolov2_cam_hdmi ] && tar zxvf proprietary/rzv2m_drpai-sample-application_ver5.00.tar.gz
+
+##########################################################
+#
 echo -e "${YELLOW}>> drp-ai_translator_release ${NC}"
 cd ${WORK}
 [ ! -d drp-ai_translator_release -a -x ./proprietary/DRP-AI_Translator-v1.60-Linux-x86_64-Install ] && echo y | ./proprietary/DRP-AI_Translator-v1.60-Linux-x86_64-Install
 cd ${WORK}/drp-ai_translator_release
-cp -Rpfv UserConfig/sample/*tiny_yolov2* UserConfig/
-if [ -f UserConfig/addrmap_in_yolov2.yaml -a -f UserConfig/prepost_yolov2.yaml ]; then
-	echo -e "${YELLOW}>> tiny_yolov2 ${NC}"
-	rm -rfv output/tiny_yolov2
-	./run_DRP-AI_translator_V2M.sh tiny_yolov2 -onnx ./onnx/tiny_yolov2.onnx
-	ls -l output/tiny_yolov2
-fi
-#mount -t nfs -o nolock,tcp,nfsvers=2 192.168.1.210:/work/userboard-rzv2mrootfs 
+cp -Rpfv ../rzv2m_drpai-sample-application_ver5.00/app_tinyyolov2_cam_hdmi/etc/addrmap_in_tinyyolov2.yaml UserConfig/
+cp -Rpfv ../rzv2m_drpai-sample-application_ver5.00/app_tinyyolov2_cam_hdmi/etc/prepost_tinyyolov2.yaml UserConfig/
+./run_DRP-AI_translator_V2M.sh tinyyolov2_cam -onnx ./onnx/tiny_yolov2.onnx
+
+##########################################################
+#
+cd ${WORK}
+echo -e "${YELLOW}>> tinyyolov2_cam ${NC}"
+/bin/cp -Rpfv rzv2m_drpai-sample-application_ver5.00/app_tinyyolov2_cam_hdmi/src meta-userboard-rzv2m/recipes-demo/app-tinyyolov2-cam-hdmi/files
+/bin/cp -Rpfv drp-ai_translator_release/output/tinyyolov2_cam meta-userboard-rzv2m/recipes-demo/app-tinyyolov2-cam-hdmi/files
 
 ##########################################################
 #
@@ -161,6 +166,7 @@ ${WORK}/poky/bitbake/bin/bitbake-layers show-layers
 #
 echo -e "${YELLOW}>> ${CORE_IMAGE} ${NC}"
 cd ${WORK}/build
+${WORK}/poky/bitbake/bin/bitbake app-tinyyolov2-cam-hdmi -v -c cleansstate
 ${WORK}/poky/bitbake/bin/bitbake ${CORE_IMAGE} -v
 
 ##########################################################

@@ -1,0 +1,14 @@
+[Unit]
+  Description=DRP-AI Demo
+#  After=dbus.service
+
+[Service]
+  Environment=PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin
+  Environment=LD_LIBRARY_PATH=/usr/lib
+#  Environment=XDG_RUNTIME_DIR=/run/user/0
+  ExecStart=/home/root/drpai-demo.sh
+  ExecStop=/usr/bin/killall -s KILL sample_app_tinyyolov2_cam_hdmi
+  Type=simple
+
+[Install]
+  WantedBy=multi-user.target
