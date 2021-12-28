@@ -9,30 +9,21 @@ if len(sys.argv) > 1:
 
 flasherfile = "AArch64_RZV2M_Flash_writer.mot"
 
-supcommand = 0
-suptext = b" SUP"
-
 flasherinittext = b"Flash writer for RZ/V2M"
-sectorwaittext = b"Please Input Start Address in sector"
-sizwaittext = b"Please Input File size"
+sectreqtext = b"Please Input Start Address in sector"
+sizreqtext = b"Please Input File size"
 
-ynwaittext = b"(y/n)"
-inputtext = b" Please Input : H'"
-flasherwaittext = b"please send !"
+#inputtext = b" Please Input : H'"
+#flasherwaittext = b"please send !"
 flasherreadytext = b">"
-
 sendrequesttext = b"please send"
 
-speeduptext1 = b"Change to 460.8Kbps baud rate setting of the SCIF."
-speeduptext2 = b"Please change to 921.6Kbps baud rate setting of the terminal."
-speeduptext3 = b"Please change to 460.8Kbps baud rate setting of the terminal."
-
 bootloadermap = [
-    {"area": "1", "sector": "0", "siz": "20000", "slave": "000000", "address": "E6320000", "file": "loader_1st_128kb.bin"},
-    {"area": "1", "sector": "100", "siz": "8", "slave": "040000", "address": "E6304000", "file": "loader_2nd_param.bin"},
-    {"area": "1", "sector": "101", "siz": "32E20", "slave": "180000", "address": "E6320000", "file": "loader_2nd.bin"},
-    {"area": "1", "sector": "901", "siz": "8", "slave": "1C0000", "address": "44000000", "file": "u-boot_param.bin"},
-    {"area": "1", "sector": "902", "siz": "7F149", "slave": "300000", "address": "50000000", "file": "u-boot.bin"},
+    {"area": "1", "sector": "0", "siz": "20000", "file": "loader_1st_128kb.bin"},
+    {"area": "1", "sector": "100", "siz": "8", "file": "loader_2nd_param.bin"},
+    {"area": "1", "sector": "101", "siz": "32E20", "file": "loader_2nd.bin"},
+    {"area": "1", "sector": "901", "siz": "8", "file": "u-boot_param.bin"},
+    {"area": "1", "sector": "902", "siz": "7F149", "file": "u-boot.bin"},
 ]
 
 if len(sport) == 0:
@@ -56,7 +47,7 @@ while True:
 ###########################################################
 print('Download mode detected.')
 print("")
-print('Sending %s ...' % flasherfile)
+#print('Sending %s ...' % flasherfile)
 sp.write(b'\r\n')
 while True:
     rdata = sp.read(4096)
@@ -78,7 +69,7 @@ while True:
 
 ###########################################################
 print("EM_E")
-sequences = [1]
+sequences = [0,1,2]
 for i in sequences:
     sp.write(b'EM_E\r\n')
     while True:
@@ -91,29 +82,30 @@ for i in sequences:
         if flasherreadytext in rdata:
             break
     print(" %d erase completed. " % i)
-    print("")
+print("")
 
 ###########################################################
 for i in range(0, (len(bootloadermap) - 0)):
     print("EM_WB: %s         " % bootloadermap[i]['file'])
     sp.write(b'EM_WB\r\n')
     while True:
-        rdata = sp.read(4096)
-        if inputtext in rdata:
+        rdata = sp.read(8192)
+        if flasherreadytext in rdata:
             break
-    #sp.write(b'1\r\n')
-    cmd = str("%s\r\n" % bootloadermap[i]['area'])
-    sp.write(cmd.encode())
+    print(" AREA: %s " % bootloadermap[i]['area'])
+    sp.write(b'1\r\n')
+    #cmd = str("%s\r\n" % bootloadermap[i]['area'])
+    #sp.write(cmd.encode())
     while True:
-        rdata = sp.read(4096)
-        if sectorwaittext in rdata:
+        rdata = sp.read(8192)
+        if sectreqtext in rdata:
             break
     print(" SECTOR: %s " % bootloadermap[i]['sector'])
     cmd = str("%s\r\n" % bootloadermap[i]['sector'])
     sp.write(cmd.encode())
     while True:
         rdata = sp.read(8192)
-        if sectorwaittext in rdata:
+        if sizreqtext in rdata:
             break
     print(" SIZ: %s " % bootloadermap[i]['siz'])
     cmd = str("%s\r\n" % bootloadermap[i]['siz'])
@@ -133,11 +125,17 @@ for i in range(0, (len(bootloadermap) - 0)):
         tlen += fdatalen
         print('\r%d bytes completed.\r' % tlen, end='')
     f.close()
-    sp.write(b'.\r\n')
+    #sp.write(b'.\r\n')
     while True:
-        rdata = sp.read(4096)
+        rdata = sp.read(8192)
         if flasherreadytext in rdata:
             break
+    sp.write(b'\r\n')
+    while True:
+        rdata = sp.read(8192)
+        if flasherreadytext in rdata:
+            break
+    print("")
     print("")
 
 sp.close()
