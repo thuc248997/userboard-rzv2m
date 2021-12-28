@@ -4,7 +4,7 @@ LICENSE = "CLOSED"
 inherit autotools pkgconfig systemd
 
 SYSTEMD_SERVICE_${PN} = "drpai_demo.service"
-SYSTEMD_AUTO_ENABLE = "enable"
+SYSTEMD_AUTO_ENABLE = "disable"
 
 DEPENDS += " \
 	drpai \
