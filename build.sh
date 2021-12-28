@@ -7,6 +7,19 @@ IP_ADDR=$(ip address | grep 192.168 | head -1 | awk '{print $2}' | awk -F '/' '{
 
 function print_boot_example() {
 	echo ""
+	echo ">> Default"
+	echo -e "${YELLOW} => env default -a ${NC}"
+	echo -e "${YELLOW} => setenv core1_vector 0x01000000 ${NC}"
+	echo -e "${YELLOW} => setenv core1addr 0x01000000 ${NC}"
+	echo -e "${YELLOW} => setenv core1_firmware core1_firmware.bin ${NC}"
+	echo -e "${YELLOW} => setenv fdt_addr 0x58000000 ${NC}"
+	echo -e "${YELLOW} => setenv fdt_file r9a09g011gbg-evaluation-board.dtb ${NC}"
+	echo -e "${YELLOW} => setenv kernel Image ${NC}"
+	echo -e "${YELLOW} => setenv bootargs_sd setenv bootargs rw rootwait earlycon root=/dev/mmcblk0p2 ${NC}"
+	echo -e "${YELLOW} => setenv bootcmd 'fatload mmc 1:1 ${loadaddr} ${kernel}; fatload mmc 1:1 ${core1addr} ${core1_firmware}; fatload mmc 1:1 ${fdt_addr} ${fdt_file}; wakeup_a53core1 ${core1_vector}; booti ${loadaddr} - ${fdt_addr}' ${NC}"
+	echo -e "${YELLOW} => saveenv ${NC}"
+	echo -e "${YELLOW} => boot ${NC}"
+	echo ""
 	echo ">> FOR SD BOOT"
 	echo -e "${YELLOW} => env default -a ${NC}"
 	echo -e "${YELLOW} => setenv core1_vector 0x01000000 ${NC}"
@@ -92,7 +105,6 @@ if [ 0 -eq `apt list --installed 2>&1 | grep clang-3.9 | grep -v WARNING | wc -l
 	sudo apt-get install -y android-tools-fsutils ccache libv8-dev pax gnutls-bin libftdi-dev
 	sudo apt-get install -y gcc-aarch64-linux-gnu tftp tftpd-hpa nfs-kernel-server nfs-common tar rar gzip bzip2 pv fbi
 fi
-#fio --randrepeat=1 --ioengine=libaio --direct=1 --gtod_reduce=1 --name=rwtest --filename=rwtest --rwmixread=70 --bs=4k --iodepth=64 --size=1G --readwrite=randrw && rm -rfv rwtest
 TFTPBOOT=/var/lib/tftpboot
 [ -d ${TFTPBOOT} ] && sudo chmod 777 ${TFTPBOOT}
 
@@ -183,6 +195,7 @@ echo -e "${YELLOW}>> ${CORE_IMAGE} ${NC}"
 cd ${WORK}/build
 ${WORK}/poky/bitbake/bin/bitbake app-tinyyolov2-cam-hdmi -v -c cleansstate
 ${WORK}/poky/bitbake/bin/bitbake ${CORE_IMAGE} -v
+${WORK}/poky/bitbake/bin/bitbake flash-writer -v -c deploy
 
 ##########################################################
 #
@@ -324,6 +337,7 @@ sudo rm -rfv ./mnt/*
 sudo /bin/cp build/tmp/deploy/images/${MACHINE}/$(ls -l build/tmp/deploy/images/${MACHINE}/Image | awk '{print $11}') mnt/Image
 sudo /bin/cp build/tmp/deploy/images/${MACHINE}/r9*.dtb mnt/
 sudo /bin/cp proprietary/core1_firmware.bin mnt/
+sudo /bin/cp build/tmp/deploy/images/${MACHINE}/B2_intSW.bin mnt/
 sudo /bin/cp build/tmp/deploy/images/${MACHINE}/$(ls -l build/tmp/deploy/images/${MACHINE}/modules-${MACHINE}.tgz | awk '{print $11}') mnt/modules-${MACHINE}.tgz
 sudo umount mnt
 
