@@ -5,7 +5,7 @@
 This repository is a Linux reference software for building core-image-bsp on Renesas RZ/V2M. 
 You have to get the proprietary software and hardware before building this REPO. Please contact for the following name card: 
 
-## Board
+## Block Diagram
 
 <img src="https://renesas.info/w/images/2/29/RZV2M_EVK.jpg" />
 <img src="/assets/block-rzv2m_0.png" width="600" height="480" />
