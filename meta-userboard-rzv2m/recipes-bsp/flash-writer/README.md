@@ -41,4 +41,19 @@ sudo ./emmc_flash_writer_helper
 ```
 
 #### 5. Confirm booting by the boot loader and U-boot
-Power on the `RZ/V2M Evaluation Kit` with the normal mode. And then, confirm that the boot loader and U-boot run normally.
+Power on the `RZ/V2M Evaluation Kit` with the normal mode. And then, confirm that the boot loader and U-boot run normally. 
+
+
+### Quickly Deployment
+
+#### 1. Build all
+
+```
+./build.sh
+```
+
+#### 2. NFS boot
+```
+```
+
+
