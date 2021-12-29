@@ -89,5 +89,5 @@ After booting successfully from a given NFS server, run the `./mmc_download.sh` 
 #### 4. Enable the relavant service
 
 ```
-systemctl 
+systemctl enable drpai_demo.service
 ```
