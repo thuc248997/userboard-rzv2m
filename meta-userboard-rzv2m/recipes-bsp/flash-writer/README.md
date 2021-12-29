@@ -16,3 +16,20 @@ Store the Flash writer binary (B2_intSW.bin) in a micro-SDHC Card that has 1 par
 Insert the micro-SD card into the micro-SD card slot on the RZ/V2M Evaluation Kit.
 Set the Main SW2 on the RZ/V2M Evaluation Kit is as the following table to change the board operation mode to "forced write mode".
 
+|  SW1  |  SW2  |  SW3  |  SW4  |
+| ----- | ----- | ----- | ----- |
+|  OFF  |  OFF  |  OFF  |  ON   |
+
+#### 3. Start the flash writer
+Set the Main SW2 on the RZ/V2M Evaluation Kit is as the following table to change the board operation mode to "normal mode".
+
+|  SW1  |  SW2  |  SW3  |  SW4  |
+| ----- | ----- | ----- | ----- |
+|  OFF  |  OFF  |  OFF  |  OFF  |
+
+Power on the RZ/V2M Evaluation Kit. The following log will appear if RZ/V2M starts in normal mode and run Flash writer successfully.
+
+```
+Flash writer for RZ/V2M V1.00 Jul 9, 2021
+>
+```
