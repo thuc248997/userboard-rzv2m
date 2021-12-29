@@ -10,12 +10,12 @@ if len(sys.argv) > 1:
 flasherfile = "AArch64_RZV2M_Flash_writer.mot"
 
 flasherinittext = b"Flash writer for RZ/V2M"
-sectreqtext = b"Please Input Start Address in sector"
-sizreqtext = b"Please Input File size"
-wbcompletetext = b"EM_WB Complete!"
+sectreqtext = b"Please Input Start Address in sector :"
+sizreqtext = b"Please Input File size(byte) :"
+wbcompletetext = b"EM_WB Complete!\r\n>"
 
 flasherreadytext = b">"
-sendrequesttext = b"please send"
+sendrequesttext = b"please send binary file!"
 
 bootloadermap = [
     {"area": "1", "sector": "000", "siz": "20000", "file": "loader_1st_128kb.bin"},
