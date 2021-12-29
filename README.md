@@ -55,7 +55,7 @@ http://www.regulus.com.tw/
 ./mmc_download.sh
 ```
 
-##### Enable relavant service
+##### Enable the relavant service
 ```
 systemctl enable drpai_demo.service
 ```
