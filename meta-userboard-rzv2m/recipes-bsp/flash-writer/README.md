@@ -54,9 +54,10 @@ Power on the `RZ/V2M Evaluation Kit` with the normal mode. And then, confirm tha
 
 #### 2. NFS boot
 
-Take the following instructions for the mecessary u-boot settings. 
+Take the following instructions for the necessary u-boot settings. 
 
 ```
+=> env default -a
 => setenv ethaddr 2E:09:0A:00:BE:11
 => setenv ipaddr 192.168.1.133
 => setenv serverip 192.168.1.210
@@ -79,6 +80,14 @@ Take the following instructions for the mecessary u-boot settings.
 
 #### 3. Update the core-image to the EMMC
 
+After booting successfully from a given NFS server, run the `./mmc_download.sh` . 
+
 ```
 ./mmc_download.sh
+```
+
+#### 4. Enable the relavant service
+
+```
+systemctl 
 ```
