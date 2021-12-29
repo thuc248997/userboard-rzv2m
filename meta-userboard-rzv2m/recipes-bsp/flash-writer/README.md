@@ -96,3 +96,8 @@ systemctl enable drpai_demo.service
 
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/_iFeg2z4lCw/0.jpg)](https://youtu.be/_iFeg2z4lCw)
 
+<P>
+
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/TzaTyqkk9OA/0.jpg)](https://youtu.be/TzaTyqkk9OA)
+
+
