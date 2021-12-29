@@ -24,13 +24,13 @@ http://www.regulus.com.tw/
 
 ## Quickly Deployment
 
-##### Build
+##### 1. Build
 
 ```
 ./build.sh
 ```
 
-##### NFS Boot
+##### 2. NFS Boot
 
 ```
 => setenv core1_vector 0x01000000
@@ -50,13 +50,13 @@ http://www.regulus.com.tw/
 ...
 ```
 
-##### EMMC update
+##### 3. EMMC update
 
 ```
 ./mmc_download.sh
 ```
 
-##### Enable the relavant service
+##### 4. Enable the relavant service
 ```
 systemctl enable drpai_demo.service
 ```
