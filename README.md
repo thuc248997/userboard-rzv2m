@@ -8,6 +8,7 @@ You have to get the proprietary software and hardware before building this REPO.
 ## Board
 
 <img src="https://renesas.info/w/images/2/29/RZV2M_EVK.jpg" />
+<img src="/assets/block-rzv2m_0.png" width="600" height="600" />
 
 ## Contact
 
