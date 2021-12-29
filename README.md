@@ -25,20 +25,6 @@ http://www.regulus.com.tw/
 ## EMMC Flash Writer Helper
 https://github.com/lexra/userboard-rzv2m/blob/master/meta-userboard-rzv2m/recipes-bsp/flash-writer/README.md
 
-## RZ/V2M start-up guide
-
-https://www.renesas.com/us/en/document/qsg/rzv2m-linux-start-guide-rev110?language=en&r=1320296
-
-## RZ/V2M ISP support package release note
-
-https://www.renesas.com/us/en/document/rln/rzv2m-isp-support-package-version110-release-note
-
-
-## DRP-AI translator user manual
-
-https://www.renesas.com/us/en/document/mat/drp-ai-translator-v160-user-s-manual?language=en&r=1320296
-
-
 Maintainers
 -------------------------
 
