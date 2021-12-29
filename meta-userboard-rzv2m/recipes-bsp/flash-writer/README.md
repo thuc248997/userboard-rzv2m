@@ -12,7 +12,7 @@ cd build/tmp/deploy/images/rzv2m
 ```
 
 #### 2. Write the flash writer to the eMMC
-Store the Flash writer binary (B2_intSW.bin) in a micro-SDHC Card that has 1 partition formatted with FAT32.
+Store the Flash writer binary (`B2_intSW.bin`) in a micro-SDHC Card that has 1 partition formatted with FAT32.
 Insert the micro-SD card into the micro-SD card slot on the RZ/V2M Evaluation Kit.
 Set the Main SW2 on the `RZ/V2M Evaluation Kit` is as the following table to change the board operation mode to "forced write mode".
 
