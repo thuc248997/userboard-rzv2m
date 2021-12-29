@@ -4,7 +4,7 @@
 
 As the picture displayed above, the `RZ/V2M EMMC flash writer helper` can help quickly program the `loader_1st_128kb.bin`, `loader_2nd_param.bin`, `loader_2nd.bin`, `u-boot_param.bin`, and `u-boot.bin` for the `RZ/V2M Evaluation Kit` board. 
 
-### Steps for the `RZ/V2M EMMC flash writer helper`
+## Steps for the `RZ/V2M EMMC flash writer helper`
 
 #### 1. Change to the deploy folder
 ```
@@ -44,9 +44,10 @@ sudo ./emmc_flash_writer_helper
 Power on the `RZ/V2M Evaluation Kit` with the normal mode. And then, confirm that the boot loader and U-boot run normally. 
 
 
-### Quickly Deployment
+## Quickly Deployment
 
 #### 1. Build all
+First, build everything needed. 
 
 ```
 ./build.sh
