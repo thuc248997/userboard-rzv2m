@@ -15,8 +15,8 @@ function print_boot_example() {
 	echo -e "${YELLOW} => setenv fdt_addr 0x58000000 ${NC}"
 	echo -e "${YELLOW} => setenv fdt_file r9a09g011gbg-evaluation-board.dtb ${NC}"
 	echo -e "${YELLOW} => setenv kernel Image ${NC}"
-	echo -e "${YELLOW} => setenv bootargs_sd setenv bootargs rw rootwait earlycon root=/dev/mmcblk0p2 ${NC}"
-	echo -e "${YELLOW} => setenv bootcmd 'fatload mmc 1:1 ${loadaddr} ${kernel}; fatload mmc 1:1 ${core1addr} ${core1_firmware}; fatload mmc 1:1 ${fdt_addr} ${fdt_file}; wakeup_a53core1 ${core1_vector}; booti ${loadaddr} - ${fdt_addr}' ${NC}"
+	echo -e "${YELLOW} => setenv bootargs rw rootwait earlycon root=/dev/mmcblk1p2 ${NC}"
+	echo -e "${YELLOW} => setenv bootcmd 'fatload mmc 1:1 \${loadaddr} \${kernel}; fatload mmc 1:1 \${core1addr} \${core1_firmware}; fatload mmc 1:1 \${fdt_addr} \${fdt_file}; wakeup_a53core1 \${core1_vector}; booti \${loadaddr} - \${fdt_addr}' ${NC}"
 	echo -e "${YELLOW} => saveenv ${NC}"
 	echo -e "${YELLOW} => boot ${NC}"
 	echo ""
@@ -120,9 +120,9 @@ wait
 
 ##########################################################
 #
-#META_RZV_COMMIT=rocko/rzv2m
+META_RZV_COMMIT=rocko/rzv2m
 #META_RZV_COMMIT=RZV2M-BSP-V1.0.0_for_Web
-META_RZV_COMMIT=RZV2M-BSP-V1.1.0
+#META_RZV_COMMIT=RZV2M-BSP-V1.1.0
 POKY_COMMIT=7e7ee662f5dea4d090293045f7498093322802cc
 META_OE_COMMIT=352531015014d1957d6444d114f4451e241c4d23
 META_GPLV2_COMMIT=f875c60ecd6f30793b80a431a2423c4b98e51548

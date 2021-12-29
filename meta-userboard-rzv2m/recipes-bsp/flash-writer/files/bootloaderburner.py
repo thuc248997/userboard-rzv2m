@@ -12,17 +12,16 @@ flasherfile = "AArch64_RZV2M_Flash_writer.mot"
 flasherinittext = b"Flash writer for RZ/V2M"
 sectreqtext = b"Please Input Start Address in sector"
 sizreqtext = b"Please Input File size"
+wbcompletetext = b"EM_WB Complete!"
 
-#inputtext = b" Please Input : H'"
-#flasherwaittext = b"please send !"
 flasherreadytext = b">"
 sendrequesttext = b"please send"
 
 bootloadermap = [
-    {"area": "1", "sector": "0", "siz": "20000", "file": "loader_1st_128kb.bin"},
-    {"area": "1", "sector": "100", "siz": "8", "file": "loader_2nd_param.bin"},
-    {"area": "1", "sector": "101", "siz": "32E20", "file": "loader_2nd.bin"},
-    {"area": "1", "sector": "901", "siz": "8", "file": "u-boot_param.bin"},
+    {"area": "1", "sector": "000", "siz": "20000", "file": "loader_1st_128kb.bin"},
+    {"area": "1", "sector": "100", "siz": "00008", "file": "loader_2nd_param.bin"},
+    {"area": "1", "sector": "101", "siz": "32520", "file": "loader_2nd.bin"},
+    {"area": "1", "sector": "901", "siz": "00008", "file": "u-boot_param.bin"},
     {"area": "1", "sector": "902", "siz": "7F149", "file": "u-boot.bin"},
 ]
 
@@ -69,7 +68,7 @@ while True:
 
 ###########################################################
 print("EM_E")
-sequences = [0,1,2]
+sequences = [1]
 for i in sequences:
     sp.write(b'EM_E\r\n')
     while True:
@@ -93,9 +92,8 @@ for i in range(0, (len(bootloadermap) - 0)):
         if flasherreadytext in rdata:
             break
     print(" AREA: %s " % bootloadermap[i]['area'])
-    sp.write(b'1\r\n')
-    #cmd = str("%s\r\n" % bootloadermap[i]['area'])
-    #sp.write(cmd.encode())
+    cmd = str("%s\r\n" % bootloadermap[i]['area'])
+    sp.write(cmd.encode())
     while True:
         rdata = sp.read(8192)
         if sectreqtext in rdata:
@@ -128,7 +126,7 @@ for i in range(0, (len(bootloadermap) - 0)):
     #sp.write(b'.\r\n')
     while True:
         rdata = sp.read(8192)
-        if flasherreadytext in rdata:
+        if wbcompletetext in rdata:
             break
     sp.write(b'\r\n')
     while True:
