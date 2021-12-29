@@ -33,3 +33,12 @@ Power on the RZ/V2M Evaluation Kit. The following log will appear if RZ/V2M star
 Flash writer for RZ/V2M V1.00 Jul 9, 2021
 >
 ```
+
+#### 4. Write loader binaries to eMMC with Flash writer
+
+```
+sudo ./emmc_flash_writer_helper
+```
+
+#### 5. Confirm booting by the boot loader and U-boot
+Power on the RZ/V2M Evaluation Kit with the normal mode. And then, confirm that the boot loader and U-boot run normally.
