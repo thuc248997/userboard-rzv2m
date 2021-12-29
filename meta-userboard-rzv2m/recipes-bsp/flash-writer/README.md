@@ -17,7 +17,7 @@ Insert the micro-SD card into the micro-SD card slot on the RZ/V2M Evaluation Ki
 Set the Main SW2 on the `RZ/V2M Evaluation Kit` is as the following table to change the board operation mode to "forced write mode".
 
 |  SW1  |  SW2  |  SW3  |  SW4  |
-| :---  | :---: | :---: |  ---: |
+| ----- | ----- | ----- | ----- |
 |  OFF  |  OFF  |  OFF  |  ON   |
 
 #### 3. Start the flash writer
