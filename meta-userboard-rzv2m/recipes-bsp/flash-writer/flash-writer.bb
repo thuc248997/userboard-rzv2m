@@ -10,7 +10,7 @@ BRANCH = "rz_v2m"
 SRC_URI = "${FLASH_WRITER_URL};branch=${BRANCH}"
 SRCREV = "27cc05b41b533b7296e35c77013c236483efd617"
 SRC_URI_append = "\
-        file://bootloaderburner.py \
+        file://emmc_flash_writer_helper \
 "
 
 inherit deploy
@@ -30,7 +30,7 @@ do_deploy() {
 	install -d ${DEPLOYDIR}
 	install -m 755 ${S}/AArch64_output/*.mot ${DEPLOYDIR}
 	install -m 755 ${S}/AArch64_output/B2_intSW.bin ${DEPLOYDIR}
-        install -m 755 ${WORKDIR}/bootloaderburner.py ${DEPLOYDIR}
+        install -m 755 ${WORKDIR}/emmc_flash_writer_helper ${DEPLOYDIR}
 }
 PARALLEL_MAKE = "-j 1"
 addtask deploy after do_compile
