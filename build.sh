@@ -164,17 +164,30 @@ echo -e "${YELLOW}>> rzv2m_drpai-sample-application ${NC}"
 echo -e "${YELLOW}>> drp-ai_translator_release ${NC}"
 cd ${WORK}
 [ ! -d drp-ai_translator_release -a -x ./proprietary/DRP-AI_Translator-v1.60-Linux-x86_64-Install ] && echo y | ./proprietary/DRP-AI_Translator-v1.60-Linux-x86_64-Install
-cd ${WORK}/drp-ai_translator_release
-rm -rfv output/tinyyolov2_cam
-./run_DRP-AI_translator_V2M.sh tinyyolov2_cam -onnx ./onnx/tiny_yolov2.onnx -addr ../rzv2m_drpai-sample-application_ver5.00/app_tinyyolov2_cam_hdmi/etc/addrmap_in_tinyyolov2.yaml -prepost UserConfig/sample/prepost_tiny_yolov2.yaml
 
 ##########################################################
 #
-cd ${WORK}
 echo -e "${YELLOW}>> tinyyolov2_cam ${NC}"
+cd ${WORK}/drp-ai_translator_release
+rm -rf output/tinyyolov2_cam
+./run_DRP-AI_translator_V2M.sh tinyyolov2_cam -onnx ./onnx/tiny_yolov2.onnx -addr ../rzv2m_drpai-sample-application_ver5.00/app_tinyyolov2_cam_hdmi/etc/addrmap_in_tinyyolov2.yaml -prepost UserConfig/sample/prepost_tiny_yolov2.yaml
+cd ${WORK}
+echo -e "${YELLOW}>> sample_app_tinyyolov2_cam_hdmi ${NC}"
 /bin/cp -Rpfv rzv2m_drpai-sample-application_ver5.00/app_tinyyolov2_cam_hdmi/src meta-userboard-rzv2m/recipes-demo/app-tinyyolov2-cam-hdmi/files
-rm -rfv meta-userboard-rzv2m/recipes-demo/app-tinyyolov2-cam-hdmi/files/tinyyolov2_cam
+rm -rf meta-userboard-rzv2m/recipes-demo/app-tinyyolov2-cam-hdmi/files/tinyyolov2_cam
 /bin/cp -Rpfv drp-ai_translator_release/output/tinyyolov2_cam meta-userboard-rzv2m/recipes-demo/app-tinyyolov2-cam-hdmi/files
+
+##########################################################
+#
+echo -e "${YELLOW}>> hrnet_cam ${NC}"
+cd ${WORK}/drp-ai_translator_release
+rm -rf output/hrnet_cam
+./run_DRP-AI_translator_V2M.sh hrnet_cam -onnx ./onnx/resnet50v1.onnx -addr ../rzv2m_drpai-sample-application_ver5.00/app_hrnet_cam_hdmi/etc/addrmap_in_hrnet.yaml -prepost UserConfig/sample/prepost_resnet50v1.yaml
+cd ${WORK}
+echo -e "${YELLOW}>> sample_app_hrnet_cam_hdmi ${NC}"
+/bin/cp -Rpfv rzv2m_drpai-sample-application_ver5.00/app_hrnet_cam_hdmi/src meta-userboard-rzv2m/recipes-demo/app-hrnet-cam-hdmi/files
+rm -rf meta-userboard-rzv2m/recipes-demo/app-hrnet-cam-hdmi/files/hrnet_cam
+/bin/cp -Rpfv drp-ai_translator_release/output/hrnet_cam meta-userboard-rzv2m/recipes-demo/app-hrnet-cam-hdmi/files
 
 ##########################################################
 #
@@ -187,6 +200,7 @@ ${WORK}/poky/bitbake/bin/bitbake-layers show-layers
 echo -e "${YELLOW}>> ${CORE_IMAGE} ${NC}"
 cd ${WORK}/build
 ${WORK}/poky/bitbake/bin/bitbake app-tinyyolov2-cam-hdmi -v -c cleansstate
+${WORK}/poky/bitbake/bin/bitbake app-hrnet-cam-hdmi -v -c cleansstate
 ${WORK}/poky/bitbake/bin/bitbake ${CORE_IMAGE} -v
 ${WORK}/poky/bitbake/bin/bitbake flash-writer -v -c deploy
 

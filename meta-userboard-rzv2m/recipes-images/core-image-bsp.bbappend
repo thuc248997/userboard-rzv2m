@@ -2,16 +2,17 @@ USE_DEPMOD ?= "1"
 
 IMAGE_INSTALL_append = " \
 	app-tinyyolov2-cam-hdmi \
-        tzdata \
-        nfs-utils \
-        devmem2 i2c-tools libgpiod sysbench \
-        libdrm-tests libdrm-kms libdrm libpng tslib \
-        dosfstools \
-        lrzsz \
-        demo-videos \
-        demo-mp3 \
-        drm2png \
-        alsa-state \
+	app-hrnet-cam-hdmi \
+	tzdata \
+	nfs-utils \
+	devmem2 i2c-tools libgpiod sysbench \
+	libdrm-tests libdrm-kms libdrm libpng tslib \
+	dosfstools \
+	lrzsz \
+	demo-videos \
+	demo-mp3 \
+	drm2png \
+	alsa-state \
 "
 
 IMAGE_INSTALL_append = " e2fsprogs e2fsprogs-resize2fs udev curl bc rpm usbutils"
