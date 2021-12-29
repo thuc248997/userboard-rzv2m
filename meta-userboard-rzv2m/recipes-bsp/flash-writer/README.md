@@ -88,6 +88,8 @@ After booting successfully from a given NFS server, run the `./mmc_download.sh` 
 
 #### 4. Enable the relavant service
 
+If everything is OK, enable the relavant service for the Real-time Human and Object Recognition Demo. 
+
 ```
 systemctl enable drpai_demo.service
 ```
