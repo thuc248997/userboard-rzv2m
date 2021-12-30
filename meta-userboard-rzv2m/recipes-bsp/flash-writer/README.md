@@ -4,7 +4,7 @@
 
 As the picture displayed above, the `RZ/V2M eMMC flash writer helper` can help quickly program the `loader_1st_128kb.bin`, `loader_2nd_param.bin`, `loader_2nd.bin`, `u-boot_param.bin`, and `u-boot.bin` for the `RZ/V2M Evaluation Kit` . 
 
-## Steps for the Use of `RZ/V2M eMMC Flash Writer Helper`
+## Steps for the use of `RZ/V2M eMMC Flash Writer Helper`
 
 #### 1. Change to the deploy folder
 ```bash
