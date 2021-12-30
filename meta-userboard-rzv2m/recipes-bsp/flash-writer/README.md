@@ -115,7 +115,7 @@ Note please, according to the above u-boot settings, we don't need the tftp down
 
 #### 3. Update the Core-image to the eMMC storage
 
-After booting successfully from a given NFS server, run the `./mmc_download.sh` shell-script ; this shell-script will help patition, help format the EMMC storage, then un-tar the core-image to the EMMC partitions. 
+After booting successfully from a given NFS server, run the `./mmc_download.sh` shell-script ; this shell-script will help patition and help format the EMMC storage, then un-tar the core-image to the EMMC partitions. 
 
 ```bash
 ./mmc_download.sh
