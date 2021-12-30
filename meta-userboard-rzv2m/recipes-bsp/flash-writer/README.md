@@ -1,10 +1,10 @@
-## `RZ/V2M EMMC Flash Writer Helper` Overview
+## `RZ/V2M eMMC Flash Writer Helper` Overview
 
 <img src="/assets/emmc_flash_writer_helper.png" />
 
-As the picture displayed above, the `RZ/V2M EMMC flash writer helper` can help quickly program the `loader_1st_128kb.bin`, `loader_2nd_param.bin`, `loader_2nd.bin`, `u-boot_param.bin`, and `u-boot.bin` for the `RZ/V2M Evaluation Kit` . 
+As the picture displayed above, the `RZ/V2M eMMC flash writer helper` can help quickly program the `loader_1st_128kb.bin`, `loader_2nd_param.bin`, `loader_2nd.bin`, `u-boot_param.bin`, and `u-boot.bin` for the `RZ/V2M Evaluation Kit` . 
 
-## Steps for the `RZ/V2M EMMC Flash Writer Helper` Usage
+## Steps for the `RZ/V2M eMMC Flash Writer Helper` Usage
 
 #### 1. Change to the deploy folder
 ```bash
@@ -20,7 +20,9 @@ Set the Main SW2 on the `RZ/V2M Evaluation Kit` is as the following table to cha
 | ----- | ----- | ----- | ----- |
 |  OFF  |  OFF  |  OFF  |  ON   |
 
-<img src="/assets/sw2.png" width=420 height=120 />
+<img src="/assets/sw2.png" width=420 height=120 /> <P>
+
+If the `B2_intSW.bin` not found, the LED2 displayed above shall blink, which means we are failed to write the `flash writer` . 
 
 #### 3. Start the flash writer
 Set the Main SW2 on the RZ/V2M Evaluation Kit is as the following table to change the board operation mode to "normal mode".
@@ -111,7 +113,7 @@ Take the following instructions for the necessary u-boot settings of your `RZ/V2
 Note please, according to the above u-boot settings, we don't need the tftp download, instead we use nfs download. The download method here is a little different from the method documented on Renesas Official guides. 
 
 
-#### 3. Update the Core-image to the EMMC storage
+#### 3. Update the Core-image to the eMMC storage
 
 After booting successfully from a given NFS server, run the `./mmc_download.sh` shell-script ; this shell-script will help patition, help format the EMMC storage, then un-tar the core-image to the EMMC partitions. 
 
