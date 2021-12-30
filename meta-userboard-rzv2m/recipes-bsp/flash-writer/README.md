@@ -52,7 +52,14 @@ First, build everything needed.
 ```
 ./build.sh
 ```
-If all succeeded, the build script had made an exported rootfs for the following `NFS Boot`. 
+If all succeeded, the build script had made an exported rootfs for the following `NFS Boot`. Edit the `/etc/fstab` just as the following, then restart the `nfs-kernel-server` service. 
+
+```bash
+/work/userboard-rzv2m/rootfs                    *(rw,sync,no_root_squash,no_subtree_check)
+```
+```bash
+sudo /etc/init.d/nfs-kernel-server restart
+```
 
 #### 2. NFS boot
 
