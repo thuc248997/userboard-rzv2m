@@ -97,7 +97,7 @@ Take the following instructions for the necessary u-boot settings of your `RZ/V2
 
 #### 3. Update the Core-image to the EMMC storage
 
-After booting successfully from a given NFS server, run the `./mmc_download.sh` shell-script ; this shell-script will help patition / format the EMMC, then un-tar the core-image to the EMMC partitions. 
+After booting successfully from a given NFS server, run the `./mmc_download.sh` shell-script ; this shell-script will help patition, help format the EMMC storage, then un-tar the core-image to the EMMC partitions. 
 
 ```
 ./mmc_download.sh
