@@ -23,7 +23,8 @@ http://www.regulus.com.tw/
 <img src="/assets/block-rzv2m_0.png" width="600" height="480" />
 
 ## EMMC Flash Writer Helper
-https://github.com/lexra/userboard-rzv2m/blob/master/meta-userboard-rzv2m/recipes-bsp/flash-writer/README.md
+For more details, read the [EMMC Flash Writer Helper](/recipes-bsp/flash-writer/README.md) Link. 
+
 
 Maintainers
 -------------------------
