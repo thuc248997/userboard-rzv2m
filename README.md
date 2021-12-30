@@ -22,8 +22,8 @@ http://www.regulus.com.tw/
 <img src="https://renesas.info/w/images/2/29/RZV2M_EVK.jpg" />
 <img src="/assets/block-rzv2m_0.png" width="600" height="480" />
 
-## RZ/V2M EMMC Flash Writer Helper
-For more details, read the [RZ/V2M EMMC Flash Writer Helper Overview](/meta-userboard-rzv2m/recipes-bsp/flash-writer) . 
+## Quick Deployment Guide
+For a quick deployment, read the [RZ/V2M EMMC Flash Writer Helper Overview](/meta-userboard-rzv2m/recipes-bsp/flash-writer) . 
 
 
 Maintainers
