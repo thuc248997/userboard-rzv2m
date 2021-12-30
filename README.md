@@ -2,8 +2,8 @@
 
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/TzaTyqkk9OA/0.jpg)](https://youtu.be/TzaTyqkk9OA)
 
-This repository is a Linux reference software for building core-image-bsp on Renesas RZ/V2M. 
-You have to get the proprietary software and hardware before building this REPO. Please contact for the following name card: 
+This repository is a Linux reference software for building the Demo Core-Image on Renesas `RZ/V2M Evaluation Kit` . 
+You have to get the proprietary software before building this REPO. Please contact for the following name card: 
 
 ## Contact
 
