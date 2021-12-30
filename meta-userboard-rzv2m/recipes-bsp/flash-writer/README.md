@@ -1,4 +1,4 @@
-## `RZ/V2M EMMC flash writer helper` Overview
+## `RZ/V2M EMMC Flash Writer Helper` Overview
 
 <img src="/assets/emmc_flash_writer_helper.png" />
 
