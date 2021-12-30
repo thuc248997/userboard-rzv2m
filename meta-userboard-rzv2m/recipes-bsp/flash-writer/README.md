@@ -91,6 +91,7 @@ Take the following instructions for the necessary u-boot settings of your `RZ/V2
 => setenv bootnfs 'run bootargs_nfs; run download_nfs; wakeup_a53core1 ${core1_vector}; booti ${loadaddr} - ${fdt_addr}'
 => 
 => saveenv
+=> 
 => run bootnfs
 ```
 
