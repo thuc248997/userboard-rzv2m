@@ -23,7 +23,7 @@ http://www.regulus.com.tw/
 <img src="/assets/block-rzv2m_0.png" width="600" height="480" />
 
 ## Quick Deployment
-For a quick deployment, read the [RZ/V2M EMMC Flash Writer Helper Overview](/meta-userboard-rzv2m/recipes-bsp/flash-writer) . 
+For a quick deployment, read the [RZ/V2M eMMC Flash Writer Helper Overview](/meta-userboard-rzv2m/recipes-bsp/flash-writer) . 
 
 
 Maintainers
