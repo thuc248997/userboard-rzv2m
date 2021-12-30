@@ -55,7 +55,7 @@ First, build everything needed.
 
 #### 2. NFS boot
 
-Take the following instructions for the necessary u-boot settings of your `RZ/V2M Evaluation Kit` ; then boot the board over the NFS (Networt File System) .  
+Take the following instructions for the necessary u-boot settings of your `RZ/V2M Evaluation Kit` ; then boot the `RZ/V2M Evaluation Kit` over the NFS (Networt File System) .  
 
 ```
 => env default -a
