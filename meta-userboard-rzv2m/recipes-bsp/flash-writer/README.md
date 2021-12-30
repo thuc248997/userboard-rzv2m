@@ -20,6 +20,8 @@ Set the Main SW2 on the `RZ/V2M Evaluation Kit` is as the following table to cha
 | ----- | ----- | ----- | ----- |
 |  OFF  |  OFF  |  OFF  |  ON   |
 
+<img src="/assets/sw2.png" width=420 height=120 />
+
 #### 3. Start the flash writer
 Set the Main SW2 on the RZ/V2M Evaluation Kit is as the following table to change the board operation mode to "normal mode".
 
