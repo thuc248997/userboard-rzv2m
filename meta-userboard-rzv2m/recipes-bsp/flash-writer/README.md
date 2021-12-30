@@ -62,6 +62,7 @@ Take the following instructions for the necessary u-boot settings of your `RZ/V2
 => setenv ethaddr 2E:09:0A:00:BE:11
 => setenv ipaddr 192.168.1.133
 => setenv serverip 192.168.1.210
+=> setenv NFSROOT ${serverip}:/work/userboard-rzv2m/rootfs
 => setenv core1_vector 0x01000000
 => setenv core1_vector 0x01000000
 => setenv core1addr 0x01000000
@@ -69,9 +70,10 @@ Take the following instructions for the necessary u-boot settings of your `RZ/V2
 => setenv fdt_addr 0x58000000
 => setenv fdt_file r9a09g011gbg-evaluation-board.dtb
 => setenv kernel Image
+```
+```
 => setenv bootargs rw rootwait earlycon root=/dev/mmcblk1p2
 => setenv bootcmd 'fatload mmc 1:1 ${loadaddr} ${kernel}; fatload mmc 1:1 ${core1addr} ${core1_firmware}; fatload mmc 1:1 ${fdt_addr} ${fdt_file}; wakeup_a53core1 ${core1_vector}; booti ${loadaddr} - ${fdt_addr}'
-=> setenv NFSROOT ${serverip}:/work/userboard-rzv2m/rootfs
 => setenv bootargs_nfs 'setenv bootargs rw rootwait root=/dev/nfs nfsroot=${NFSROOT},nfsvers=3 ip=dhcp'
 => setenv download_nfs 'nfs ${loadaddr} ${NFSROOT}/boot/${kernel}; nfs ${fdt_addr} ${NFSROOT}/boot/r9a09g011gbg-evaluation-board.dtb; nfs ${core1addr} ${NFSROOT}/boot/${core1_firmware};'
 => setenv bootnfs 'run bootargs_nfs; run download_nfs; wakeup_a53core1 ${core1_vector}; booti ${loadaddr} - ${fdt_addr}'
