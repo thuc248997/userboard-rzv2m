@@ -55,7 +55,7 @@ First, build everything needed.
 
 #### 2. NFS boot
 
-Take the following instructions for the necessary u-boot settings. 
+Take the following instructions for the necessary u-boot settings of your `RZ/V2M Evaluation Kit` ; then boot the board over the NFS (Networt File System) .  
 
 ```
 => env default -a
@@ -81,7 +81,7 @@ Take the following instructions for the necessary u-boot settings.
 
 #### 3. Update the core-image to the EMMC
 
-After booting successfully from a given NFS server, run the `./mmc_download.sh` . 
+After booting successfully from a given NFS server, run the `./mmc_download.sh` shell-script ; this shell-script will help patition / format the EMMC, then un-tar the core-image to the EMMC partitions. 
 
 ```
 ./mmc_download.sh
@@ -89,7 +89,7 @@ After booting successfully from a given NFS server, run the `./mmc_download.sh` 
 
 #### 4. Enable the relavant service
 
-If everything is OK, enable the relavant service for the Real-time Human and Object Recognition Demo. 
+If everything is OK, enable the relavant service for the `Real-time Human and Object Recognition` Demo.   
 
 ```
 systemctl enable drpai_demo.service
