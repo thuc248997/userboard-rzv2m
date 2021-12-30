@@ -44,7 +44,7 @@ sudo ./emmc_flash_writer_helper
 Power on the `RZ/V2M Evaluation Kit` with the normal mode. And then, confirm that the boot loader and U-boot run normally. 
 
 
-## Quick Core-Image-Bsp Deployment
+## Quick Deployment Guide
 
 #### 1. Build all
 First, build everything needed. 
