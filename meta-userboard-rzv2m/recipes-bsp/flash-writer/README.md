@@ -7,7 +7,7 @@ As the picture displayed above, the `RZ/V2M EMMC flash writer helper` can help q
 ## Steps for the `RZ/V2M EMMC Flash Writer Helper` Usage
 
 #### 1. Change to the deploy folder
-```
+```bash
 cd build/tmp/deploy/images/rzv2m
 ```
 
@@ -29,14 +29,14 @@ Set the Main SW2 on the RZ/V2M Evaluation Kit is as the following table to chang
 
 Power on the RZ/V2M Evaluation Kit. The following log will appear if RZ/V2M starts in normal mode and run Flash writer successfully.
 
-```
+```bash
 Flash writer for RZ/V2M V1.00 Jul 9, 2021
 >
 ```
 
 #### 4. Write loader binaries to eMMC with Flash writer
 
-```
+```bash
 sudo ./emmc_flash_writer_helper
 ```
 
@@ -49,7 +49,7 @@ Power on the `RZ/V2M Evaluation Kit` with the normal mode. And then, confirm tha
 #### 1. Build all
 First, build everything needed. 
 
-```
+```bash
 ./build.sh
 ```
 If all succeeded, the build script had made an exported rootfs for the following `NFS Boot`. Edit the `/etc/fstab` just as the following, then restart the `nfs-kernel-server` service. 
@@ -65,7 +65,7 @@ sudo /etc/init.d/nfs-kernel-server restart
 
 Take the following instructions for the necessary u-boot settings of your `RZ/V2M Evaluation Kit` ; then boot the `RZ/V2M Evaluation Kit` over the NFS (Networt File System) .  
 
-```
+```bash
 => env default -a
 => setenv ethaddr 2E:09:0A:00:BE:11
 => setenv ipaddr 192.168.1.133
@@ -89,7 +89,7 @@ Take the following instructions for the necessary u-boot settings of your `RZ/V2
 => 
 => saveenv
 ```
-```
+```bash
 => setenv bootargs_nfs 'setenv bootargs rw rootwait root=/dev/nfs nfsroot=${NFSROOT},nfsvers=3 ip=dhcp'
 => 
 => setenv download_nfs 'nfs ${loadaddr} ${NFSROOT}/boot/${kernel}; \
@@ -110,7 +110,7 @@ Take the following instructions for the necessary u-boot settings of your `RZ/V2
 
 After booting successfully from a given NFS server, run the `./mmc_download.sh` shell-script ; this shell-script will help patition, help format the EMMC storage, then un-tar the core-image to the EMMC partitions. 
 
-```
+```bash
 ./mmc_download.sh
 ```
 
@@ -118,7 +118,7 @@ After booting successfully from a given NFS server, run the `./mmc_download.sh` 
 
 If everything is OK, enable the relavant service for the `Real-time Human and Object Recognition` Demo.   
 
-```
+```bash
 systemctl enable drpai_demo.service
 ```
 
