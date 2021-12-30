@@ -106,7 +106,7 @@ Take the following instructions for the necessary u-boot settings of your `RZ/V2
 => run bootnfs
 ```
 
-Note please, according to the above u-boot settings, we don't need the tftp download, instead we use nfs download. The download method is different from the method documented of Renesas Official guide. 
+Note please, according to the above u-boot settings, we don't need the tftp download, instead we use nfs download. The download method here is a little different from the method documented on Renesas Official guides. 
 
 
 #### 3. Update the Core-image to the EMMC storage
