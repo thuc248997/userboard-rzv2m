@@ -52,6 +52,7 @@ First, build everything needed.
 ```
 ./build.sh
 ```
+If all succeeded, the build script had made an exported rootfs for the following `NFS Boot`. 
 
 #### 2. NFS boot
 
