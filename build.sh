@@ -62,6 +62,7 @@ MACHINE=rzv2m
 TOOLCHAIN=linaro-gcc
 #TOOLCHAIN=poky-gcc
 WORK=`pwd`
+DRPAI=${WORK}/drp-ai_translator_release
 
 ##########################################################
 #
@@ -105,6 +106,7 @@ if [ 0 -eq `apt list --installed 2>&1 | grep clang-3.9 | grep -v WARNING | wc -l
 	sudo apt-get install -y android-tools-fsutils ccache libv8-dev pax gnutls-bin libftdi-dev
 	sudo apt-get install -y gcc-aarch64-linux-gnu tftp tftpd-hpa nfs-kernel-server nfs-common tar rar gzip bzip2 pv fbi
 fi
+pip3 install mmcv --no-warn-script-location
 TFTPBOOT=/var/lib/tftpboot
 [ -d ${TFTPBOOT} ] && sudo chmod 777 ${TFTPBOOT}
 
@@ -156,14 +158,44 @@ sed 's/master/main/' -i meta-openamp/recipes-openamp/open-amp/open-amp.inc
 ##########################################################
 #
 cd ${WORK}
-echo -e "${YELLOW}>> rzv2m_drpai-sample-application ${NC}"
-[ ! -d rzv2m_drpai-sample-application_ver5.00/app_tinyyolov2_cam_hdmi ] && tar zxvf proprietary/rzv2m_drpai-sample-application_ver5.00.tar.gz
+echo -e "${YELLOW}>> opencv-python-headless ${NC}"
+git clone -b v0.18.0 https://github.com/open-mmlab/mmpose.git || true
+cd ${WORK}/mmpose
+pip3 install -r requirements.txt
+sudo python3 setup.py develop
+pip3 uninstall opencv_python_headless -y || true
+pip3 install opencv-python-headless==4.5.4.60
 
 ##########################################################
 #
+cd ${WORK}
+echo -e "${YELLOW}>> rzv2m_drpai-sample-application ${NC}"
+[ ! -d rzv2m_drpai-sample-application_ver5.00/app_tinyyolov2_cam_hdmi ] && tar zxvf proprietary/rzv2m_drpai-sample-application_ver5.00.tar.gz
 echo -e "${YELLOW}>> drp-ai_translator_release ${NC}"
 cd ${WORK}
 [ ! -d drp-ai_translator_release -a -x ./proprietary/DRP-AI_Translator-v1.60-Linux-x86_64-Install ] && echo y | ./proprietary/DRP-AI_Translator-v1.60-Linux-x86_64-Install
+
+##########################################################
+#
+cd ${WORK}
+echo -e "${YELLOW}>> rzv2m_ai-implementation-guide ${NC}"
+7z x proprietary/r11an0530ej0500-rzv2m-drpai-sp.zip -y
+tar zxvf r11an0530ej0500-rzv2m-drpai-sp/rzv2m_ai-implementation-guide/rzv2m_ai-implementation-guide_ver5.00.tar.gz
+tar zxvf r11an0530ej0500-rzv2m-drpai-sp/rzv2m_ai-implementation-guide/darknet_tinyyolov2/darknet_tinyyolov2_ver5.00.tar.gz
+cd ${WORK}/pytorch/tinyyolov2
+tail -2 ${WORK}/pytorch/tinyyolov2/convert_to_pytorch.py
+echo -e "${YELLOW}>> Convert from Darknet to PyTorch ${NC}"
+python3 ${WORK}/pytorch/tinyyolov2/convert_to_pytorch.py
+ls -l ${WORK}/pytorch/tinyyolov2/yolov2-tiny-voc.pth
+echo -e "${YELLOW}>> Convert from PyTorch to ONNX format ${NC}"
+python3 ${WORK}/pytorch/tinyyolov2/convert_to_onnx.py
+ls -l ${WORK}/pytorch/tinyyolov2/tinyyolov2.onnx
+echo -e "${YELLOW}>> onnx/tinyyolov2.onnx ${NC}"
+/bin/cp -fv ${WORK}/pytorch/tinyyolov2/tinyyolov2.onnx $DRPAI/onnx/tinyyolov2.onnx
+echo -e "${YELLOW}>> UserConfig/addrmap_in_tinyyolov2.yaml ${NC}"
+/bin/cp -fv $WORK/drpai_samples/addrmap_in_linux.yaml $DRPAI/UserConfig/addrmap_in_tinyyolov2.yaml
+echo -e "${YELLOW}>> UserConfig/prepost_tinyyolov2.yaml ${NC}"
+/bin/cp -fv ${DRPAI}/UserConfig/sample/prepost_tiny_yolov2.yaml ${DRPAI}/UserConfig/prepost_tinyyolov2.yaml
 
 ##########################################################
 #
