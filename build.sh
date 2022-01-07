@@ -71,6 +71,7 @@ mkdir -p mnt && sudo rm -rfv mnt/*
 [ ! -f proprietary/rzv2m_drpai-sample-application_ver5.00.tar.gz ] && exit 1
 [ ! -f proprietary/rzv2m_isp_support-pkg_v110.tar.gz ] && exit 1
 [ ! -f proprietary/rzv2m_meta-drpai_ver5.00.tar.gz ] && exit 1
+[ ! -f proprietary/r11an0530ej0500-rzv2m-drpai-sp.zip ] && exit 1
 [ ! -f proprietary/core1_firmware.bin ] && exit 1
 [ ! -x proprietary/DRP-AI_Translator-v1.60-Linux-x86_64-Install ] && exit 1
 sudo chown -R ${USER}.${USER} ${WORK}/proprietary
