@@ -1,6 +1,7 @@
 USE_DEPMOD ?= "1"
 
 IMAGE_INSTALL_append = " \
+	app-tinyyolov2-img \
 	app-tinyyolov2-cam-hdmi \
 	app-hrnet-cam-hdmi \
 	tzdata \
