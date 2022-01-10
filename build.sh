@@ -182,45 +182,13 @@ cd ${WORK}
 echo -e "${YELLOW}>> rzv2m_ai-implementation-guide ${NC}"
 7z x proprietary/r11an0530ej0500-rzv2m-drpai-sp.zip -y
 tar zxvf r11an0530ej0500-rzv2m-drpai-sp/rzv2m_ai-implementation-guide/rzv2m_ai-implementation-guide_ver5.00.tar.gz
-tar zxvf r11an0530ej0500-rzv2m-drpai-sp/rzv2m_ai-implementation-guide/darknet_tinyyolov2/darknet_tinyyolov2_ver5.00.tar.gz
-cd ${WORK}/pytorch/tinyyolov2
-tail -2 ${WORK}/pytorch/tinyyolov2/convert_to_pytorch.py
-echo -e "${YELLOW}>> Convert from Darknet to PyTorch ${NC}"
-python3 ${WORK}/pytorch/tinyyolov2/convert_to_pytorch.py
-ls -l ${WORK}/pytorch/tinyyolov2/yolov2-tiny-voc.pth
-echo -e "${YELLOW}>> Convert from PyTorch to ONNX format ${NC}"
-python3 ${WORK}/pytorch/tinyyolov2/convert_to_onnx.py
-ls -l ${WORK}/pytorch/tinyyolov2/tinyyolov2.onnx
-echo -e "${YELLOW}>> onnx/tinyyolov2.onnx ${NC}"
-/bin/cp -fv ${WORK}/pytorch/tinyyolov2/tinyyolov2.onnx $DRPAI/onnx/tinyyolov2.onnx
-echo -e "${YELLOW}>> UserConfig/addrmap_in_tinyyolov2.yaml ${NC}"
-/bin/cp -fv $WORK/drpai_samples/addrmap_in_linux.yaml $DRPAI/UserConfig/addrmap_in_tinyyolov2.yaml
-echo -e "${YELLOW}>> UserConfig/prepost_tinyyolov2.yaml ${NC}"
-/bin/cp -fv ${DRPAI}/UserConfig/sample/prepost_tiny_yolov2.yaml ${DRPAI}/UserConfig/prepost_tinyyolov2.yaml
 
 ##########################################################
 #
-echo -e "${YELLOW}>> tinyyolov2_cam ${NC}"
-cd ${WORK}/drp-ai_translator_release
-rm -rf output/tinyyolov2_cam
-./run_DRP-AI_translator_V2M.sh tinyyolov2_cam -onnx ./onnx/tiny_yolov2.onnx -addr ../rzv2m_drpai-sample-application_ver5.00/app_tinyyolov2_cam_hdmi/etc/addrmap_in_tinyyolov2.yaml -prepost UserConfig/sample/prepost_tiny_yolov2.yaml
 cd ${WORK}
-echo -e "${YELLOW}>> sample_app_tinyyolov2_cam_hdmi ${NC}"
-/bin/cp -Rpfv rzv2m_drpai-sample-application_ver5.00/app_tinyyolov2_cam_hdmi/src meta-userboard-rzv2m/recipes-demo/app-tinyyolov2-cam-hdmi/files
-rm -rf meta-userboard-rzv2m/recipes-demo/app-tinyyolov2-cam-hdmi/files/tinyyolov2_cam
-/bin/cp -Rpfv drp-ai_translator_release/output/tinyyolov2_cam meta-userboard-rzv2m/recipes-demo/app-tinyyolov2-cam-hdmi/files
-
-##########################################################
-#
-echo -e "${YELLOW}>> hrnet_cam ${NC}"
-cd ${WORK}/drp-ai_translator_release
-rm -rf output/hrnet_cam
-./run_DRP-AI_translator_V2M.sh hrnet_cam -onnx ./onnx/resnet50v1.onnx -addr ../rzv2m_drpai-sample-application_ver5.00/app_hrnet_cam_hdmi/etc/addrmap_in_hrnet.yaml -prepost UserConfig/sample/prepost_resnet50v1.yaml
-cd ${WORK}
-echo -e "${YELLOW}>> sample_app_hrnet_cam_hdmi ${NC}"
-/bin/cp -Rpfv rzv2m_drpai-sample-application_ver5.00/app_hrnet_cam_hdmi/src meta-userboard-rzv2m/recipes-demo/app-hrnet-cam-hdmi/files
-rm -rf meta-userboard-rzv2m/recipes-demo/app-hrnet-cam-hdmi/files/hrnet_cam
-/bin/cp -Rpfv drp-ai_translator_release/output/hrnet_cam meta-userboard-rzv2m/recipes-demo/app-hrnet-cam-hdmi/files
+./app_tinyyolov2_cam_hdmi.sh
+./app_tinyyolov2_img.sh
+./mmpose_hrnet.sh
 
 ##########################################################
 #
@@ -241,6 +209,20 @@ ${WORK}/poky/bitbake/bin/bitbake flash-writer -v -c deploy
 #
 echo -e "${YELLOW}>> sstate-cache-management.sh ${NC}"
 #cd ${WORK} && poky/scripts/sstate-cache-management.sh -d -y --cache-dir=build/sstate-cache
+
+##########################################################
+#
+if [ ! -d /opt/poky/${MACHINE} ]; then
+	echo -e "${YELLOW} >> populate_sdk ${NC}"
+	cd ${WORK}/build
+	${WORK}/poky/bitbake/bin/bitbake ${CORE_IMAGE_SDK} -v -c populate_sdk
+	echo /opt/poky/${MACHINE} > yes.txt && echo y >> yes.txt
+	cat yes.txt | sudo ./tmp/deploy/sdk/poky-glibc-x86_64-${CORE_IMAGE_SDK}-aarch64-toolchain-2.4.3.sh
+	rm -rf yes.txt
+	sudo chmod +x /opt/poky/${MACHINE}/site-* || true
+	sudo chmod +x /opt/poky/${MACHINE}/environment-* || true
+	sudo chmod +x /opt/poky/${MACHINE}/version-* || true
+fi
 
 ##########################################################
 #
@@ -281,6 +263,7 @@ for D in $(ls -l r9a*.dtb | grep '\->' | awk '{print $9}' | xargs file | awk '{p
 done
 sudo chmod 777 ${WORK}/rootfs/boot
 sudo chown -R ${USER}.${USER} ${WORK}/rootfs/boot/*
+sudo chmod 777 ${WORK}/rootfs/home/root
 
 ##########################################################
 #
