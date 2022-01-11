@@ -11,7 +11,14 @@ MODEL=$(echo ${APP_FOLDER} | awk -F '_' '{print $2}')
 APP_NAME=$(echo ${APP_FOLDER} | sed 's/_/-/g')
 WORK=`pwd`
 DRPAI=${WORK}/drp-ai_translator_release
-tar zxvf r11an0530ej0500-rzv2m-drpai-sp/rzv2m_ai-implementation-guide/darknet_${MODEL}/darknet_${MODEL}_ver5.00.tar.gz
+
+#############################
+if [ 0 -eq `pip3 list | grep torch | wc -l` ]; then
+        pip3 uninstall torch torchvision torchaudio -y || true
+        pip3 install torch==1.10.1+cu113 torchvision==0.11.2+cu113 torchaudio===0.10.1+cu113 -f https://download.pytorch.org/whl/cu113/torch_stable.html
+fi
+[ ! -d drpai_samples/${MODEL}_cam -o ! -d drpai_samples/${MODEL}_jpg -o ! -d drpai_samples/${MODEL}_bmp ] && \
+        tar zxvf r11an0530ej0500-rzv2m-drpai-sp/rzv2m_ai-implementation-guide/darknet_${MODEL}/darknet_${MODEL}_ver5.00.tar.gz
 
 #############################
 echo -e "${YELLOW}>> Convert from Darknet to PyTorch ${NC}"
@@ -46,7 +53,7 @@ chmod +x output/${MODEL}_bmp/*
 #############################
 echo -e "${YELLOW}>> meta-userboard-rzv2m/recipes-demo ${NC}"
 cd ${WORK}
-#rm -rf meta-userboard-rzv2m/recipes-demo/${APP_NAME}/files/${MODEL}_cam
+rm -rf meta-userboard-rzv2m/recipes-demo/${APP_NAME}/files/${MODEL}_bmp
 mkdir -p meta-userboard-rzv2m/recipes-demo/${APP_NAME}/files
 /bin/cp -Rpfv ${DRPAI}/output/${MODEL}_bmp \
 	meta-userboard-rzv2m/recipes-demo/${APP_NAME}/files

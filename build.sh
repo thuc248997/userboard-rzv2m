@@ -107,7 +107,9 @@ if [ 0 -eq `apt list --installed 2>&1 | grep clang-3.9 | grep -v WARNING | wc -l
 	sudo apt-get install -y android-tools-fsutils ccache libv8-dev pax gnutls-bin libftdi-dev
 	sudo apt-get install -y gcc-aarch64-linux-gnu tftp tftpd-hpa nfs-kernel-server nfs-common tar rar gzip bzip2 pv fbi
 fi
-pip3 install mmcv --no-warn-script-location
+if [ 0 -eq `pip3 list | grep mmcv | wc -l` ]; then
+	pip3 install mmcv --no-warn-script-location
+fi
 TFTPBOOT=/var/lib/tftpboot
 [ -d ${TFTPBOOT} ] && sudo chmod 777 ${TFTPBOOT}
 
@@ -141,31 +143,11 @@ cd ${WORK}/meta-gplv2 && (git checkout -b tmp ${META_GPLV2_COMMIT} || true)
 
 ##########################################################
 #
-echo -e "${YELLOW}>> oe-init-build-env ${NC}"
-cd ${WORK}
-source poky/oe-init-build-env $WORK/build
-cd ${WORK}/build
-cp -fv ../meta-userboard-rzv2m/docs/sample/conf/${MACHINE}/${TOOLCHAIN}/*.conf ./conf/
-cp -fv ../meta-userboard-rzv2m/conf/machine/rzv2m.conf ../meta-rzv2m/conf/machine/
-
-##########################################################
-#
 cd ${WORK}
 [ ! -d meta-drpai ] && tar zxvf proprietary/rzv2m_meta-drpai_ver5.00.tar.gz
 [ ! -d meta-openamp ] && tar zxvf proprietary/rzv2m_isp_support-pkg_v110.tar.gz
 sed 's/master/main/' -i meta-openamp/recipes-openamp/libmetal/libmetal.inc
 sed 's/master/main/' -i meta-openamp/recipes-openamp/open-amp/open-amp.inc
-
-##########################################################
-#
-cd ${WORK}
-echo -e "${YELLOW}>> opencv-python-headless ${NC}"
-git clone -b v0.18.0 https://github.com/open-mmlab/mmpose.git || true
-cd ${WORK}/mmpose
-pip3 install -r requirements.txt
-sudo python3 setup.py develop
-pip3 uninstall opencv_python_headless -y || true
-pip3 install opencv-python-headless==4.5.4.60
 
 ##########################################################
 #
@@ -180,15 +162,25 @@ cd ${WORK}
 #
 cd ${WORK}
 echo -e "${YELLOW}>> rzv2m_ai-implementation-guide ${NC}"
-7z x proprietary/r11an0530ej0500-rzv2m-drpai-sp.zip -y
-tar zxvf r11an0530ej0500-rzv2m-drpai-sp/rzv2m_ai-implementation-guide/rzv2m_ai-implementation-guide_ver5.00.tar.gz
+[ ! -d r11an0530ej0500-rzv2m-drpai-sp ] && 7z x proprietary/r11an0530ej0500-rzv2m-drpai-sp.zip -y
+[ ! -d drpai_samples ] && tar zxvf r11an0530ej0500-rzv2m-drpai-sp/rzv2m_ai-implementation-guide/rzv2m_ai-implementation-guide_ver5.00.tar.gz
 
 ##########################################################
 #
 cd ${WORK}
 ./app_tinyyolov2_cam_hdmi.sh
 ./app_tinyyolov2_img.sh
-./mmpose_hrnet.sh
+./app_hrnet_cam_hdmi.sh
+./app_resnet50_cam.sh
+
+##########################################################
+#
+echo -e "${YELLOW}>> oe-init-build-env ${NC}"
+cd ${WORK}
+source poky/oe-init-build-env $WORK/build
+cd ${WORK}/build
+cp -fv ../meta-userboard-rzv2m/docs/sample/conf/${MACHINE}/${TOOLCHAIN}/*.conf ./conf/
+cp -fv ../meta-userboard-rzv2m/conf/machine/rzv2m.conf ../meta-rzv2m/conf/machine/
 
 ##########################################################
 #
