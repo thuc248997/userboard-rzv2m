@@ -1,6 +1,6 @@
 ## The prepost_hrnet.yaml for app-hrnet-cam-hdmi
 
-In this section, we will prepare the `prepost_hrnet.yaml` which is necessary for app-hrnet-cam-hdmi DRP-AI Translator.
+In this section, we will prepare the `prepost_hrnet.yaml` which is necessary for `DRP-AI Translator` of `app-hrnet-cam-hdmi`.
 
 #### Install the DRP-AI_Translator
 
