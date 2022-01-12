@@ -20,6 +20,7 @@ cd ${WORK}
 #############################
 git clone -b v0.18.0 https://github.com/open-mmlab/mmpose.git || true
 cd ${WORK}/mmpose
+git checkout tools/deployment/pytorch2onnx.py && patch -p1 -l -f --fuzz 3 -i ../extra/mmpose_tools_deployment_pytorch2onnx_py.patch
 if [ 0 -eq `pip3 list | grep opencv-python-headless | grep 4.5.4.60 | wc -l` ]; then
         pip3 install -r requirements.txt
         sudo python3 setup.py develop
@@ -41,19 +42,22 @@ ls -l $DRPAI/onnx/hrnet.onnx
 
 #############################
 cd ${DRPAI}
+#./run_DRP-AI_translator_V2M.sh hrnet_cam  \
+#	-onnx ./onnx/resnet50v1.onnx \
+#	-addr ../rzv2m_drpai-sample-application_ver5.00/app_hrnet_cam_hdmi/etc/addrmap_in_hrnet.yaml \
+#	-prepost UserConfig/sample/prepost_resnet50v1.yaml
 ./run_DRP-AI_translator_V2M.sh hrnet_cam  \
-	-onnx ./onnx/resnet50v1.onnx \
-	-addr ../rzv2m_drpai-sample-application_ver5.00/app_hrnet_cam_hdmi/etc/addrmap_in_hrnet.yaml \
-	-prepost UserConfig/sample/prepost_resnet50v1.yaml
+        -onnx onnx/hrnet.onnx \
+        -addr ../drpai_samples/hrnet_cam/input/addrmap_in_hrnet.yaml \
+        -prepost ../drpai_samples/hrnet_cam/input/prepost_hrnet.yaml
 
 #############################
 echo -e "${YELLOW}>> meta-userboard-rzv2m/recipes-demo ${NC}"
 cd ${WORK}
 rm -rf meta-userboard-rzv2m/recipes-demo/${APP_NAME}/files/${MODEL}_cam
 mkdir -p meta-userboard-rzv2m/recipes-demo/${APP_NAME}/files
-#/bin/cp -Rpf ${DRPAI}/output/${MODEL}_cam meta-userboard-rzv2m/recipes-demo/${APP_NAME}/files
-/bin/cp -Rpf rzv2m_drpai-sample-application_ver5.00/app_hrnet_cam_hdmi/exe/hrnet_cam \
-	meta-userboard-rzv2m/recipes-demo/${APP_NAME}/files
+/bin/cp -Rpf ${DRPAI}/output/${MODEL}_cam meta-userboard-rzv2m/recipes-demo/${APP_NAME}/files
+#/bin/cp -Rpf rzv2m_drpai-sample-application_ver5.00/app_hrnet_cam_hdmi/exe/hrnet_cam meta-userboard-rzv2m/recipes-demo/${APP_NAME}/files
 echo -e "${YELLOW}>> ${MODEL}_cam ${NC}"
 ls -ld --color meta-userboard-rzv2m/recipes-demo/${APP_NAME}/files/${MODEL}_cam
 ls -l --color meta-userboard-rzv2m/recipes-demo/${APP_NAME}/files/${MODEL}_cam

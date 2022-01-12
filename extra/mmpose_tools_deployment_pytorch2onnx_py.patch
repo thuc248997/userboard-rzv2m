@@ -1,0 +1,24 @@
+diff -Naur a/tools/deployment/pytorch2onnx.py b/tools/deployment/pytorch2onnx.py
+--- a/tools/deployment/pytorch2onnx.py
++++ b/tools/deployment/pytorch2onnx.py
+@@ -62,6 +62,9 @@ def pytorch2onnx(model,
+ 
+     one_img = torch.randn(input_shape)
+ 
++    input_names=["input1"]
++    output_names=["output1"]
++
+     register_extra_symbolics(opset_version)
+     torch.onnx.export(
+         model,
+@@ -70,7 +73,9 @@ def pytorch2onnx(model,
+         export_params=True,
+         keep_initializers_as_inputs=True,
+         verbose=show,
+-        opset_version=opset_version)
++        opset_version=opset_version,
++        input_names=input_names,
++        output_names=output_names)
+ 
+     print(f'Successfully exported ONNX model: {output_file}')
+     if verify:
