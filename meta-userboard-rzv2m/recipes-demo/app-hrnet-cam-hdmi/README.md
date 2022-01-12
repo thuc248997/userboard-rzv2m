@@ -112,3 +112,6 @@ diff -Naur a/prepost_hrnet.yaml b/prepost_hrnet.yaml
  
 
 ```
+```
+patch -p1 -l -f --fuzz 3 -i prepost_tinyyolov2_to_hrnet_yaml.diff
+```
