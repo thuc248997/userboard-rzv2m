@@ -15,7 +15,7 @@ DRPAI=${WORK}/drp-ai_translator_release
 #############################
 cd ${WORK}
 [ ! -d drpai_samples/${MODEL}_cam -o ! -d drpai_samples/${MODEL}_jpg -o ! -d drpai_samples/${MODEL}_bmp ] && \
-        tar zxvf r11an0530ej0500-rzv2m-drpai-sp/rzv2m_ai-implementation-guide/darknet_${MODEL}/mmpose_${MODEL}_ver5.00.tar.gz
+        tar zxvf r11an0530ej0500-rzv2m-drpai-sp/rzv2m_ai-implementation-guide/mmpose_${MODEL}/mmpose_${MODEL}_ver5.00.tar.gz
 
 #############################
 git clone -b v0.18.0 https://github.com/open-mmlab/mmpose.git || true
