@@ -1,3 +1,14 @@
+## prepost_hrnet.yaml
+
+### Install DRP-AI_Translator
+
+```bash
+cd ${WORK}
+rm -rfv drp-ai_translator_release && (echo y | proprietary/DRP-AI_Translator-v1.60-Linux-x86_64-Install)
+```
+
+
+
 ```patch
 diff -Naur a/prepost_hrnet.yaml b/prepost_hrnet.yaml
 --- a/prepost_hrnet.yaml
