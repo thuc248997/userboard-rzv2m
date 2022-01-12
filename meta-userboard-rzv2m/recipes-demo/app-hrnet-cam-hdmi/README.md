@@ -2,6 +2,8 @@
 
 #### Install the DRP-AI_Translator
 
+Install the `DRP-AI_Translator`. If `DRP-AI_Translator` had been inatalled, we could skip this step. 
+
 ```bash
 cd ${WORK}
 rm -rfv drp-ai_translator_release && (echo y | proprietary/DRP-AI_Translator-v1.60-Linux-x86_64-Install)
@@ -13,13 +15,17 @@ rm -rfv drp-ai_translator_release && (echo y | proprietary/DRP-AI_Translator-v1.
 cd drp-ai_translator_release/UserConfig/sample
 ```
 
-#### Generate a prepost_hrnet.yaml from the given prepost_tiny_yolov2.yaml
+#### Generate a prepost_hrnet.yaml
+
+Generate a prepost_hrnet.yaml from the given `prepost_tiny_yolov2.yaml` . 
 
 ```bash
 /bin/cp -fv prepost_tiny_yolov2.yaml prepost_hrnet.yaml
 ```
 
-#### Generate a patch `prepost_tinyyolov2_to_hrnet_yaml.patch`
+#### Prepare a patch file
+
+Generate a patch `prepost_tinyyolov2_to_hrnet_yaml.patch` with the following content:
 
 ```patch
 diff -Naur a/prepost_hrnet.yaml b/prepost_hrnet.yaml
@@ -136,7 +142,9 @@ diff -Naur a/prepost_hrnet.yaml b/prepost_hrnet.yaml
 
 ```
 
-#### Patch the `prepost_hrnet.yaml`
+#### Patch
+
+Patch the `prepost_hrnet.yaml` . 
 
 ```
 patch -p1 -l -f --fuzz 3 -d `pwd` -i prepost_tinyyolov2_to_hrnet_yaml.patch
