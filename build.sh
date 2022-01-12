@@ -169,6 +169,7 @@ echo -e "${YELLOW}>> rzv2m_ai-implementation-guide ${NC}"
 #
 cd ${WORK}
 ./app_tinyyolov2_cam_hdmi.sh
+./app_tinyyolov2_cam_vcd.sh
 ./app_tinyyolov2_img.sh
 ./app_hrnet_cam_hdmi.sh
 ./app_resnet50_cam.sh
@@ -193,6 +194,9 @@ ${WORK}/poky/bitbake/bin/bitbake-layers show-layers
 echo -e "${YELLOW}>> ${CORE_IMAGE} ${NC}"
 cd ${WORK}/build
 ${WORK}/poky/bitbake/bin/bitbake app-tinyyolov2-cam-hdmi -v -c cleansstate
+${WORK}/poky/bitbake/bin/bitbake app-tinyyolov2-cam-vcd -v -c cleansstate
+${WORK}/poky/bitbake/bin/bitbake app-tinyyolov2-img -v -c cleansstate
+${WORK}/poky/bitbake/bin/bitbake app-resnet50-cam -v -c cleansstate
 ${WORK}/poky/bitbake/bin/bitbake app-hrnet-cam-hdmi -v -c cleansstate
 ${WORK}/poky/bitbake/bin/bitbake ${CORE_IMAGE} -v
 ${WORK}/poky/bitbake/bin/bitbake flash-writer -v -c deploy
