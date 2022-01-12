@@ -1,5 +1,7 @@
 #!/bin/sh -e
 
+#unset BBPATH BB_ENV_EXTRAWHITE
+
 RED='\033[0;31m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Colo
@@ -30,28 +32,28 @@ fi
 
 #############################
 NN=configs/body/2d_kpt_sview_rgb_img/topdown_heatmap/coco/hrnet_w32_coco_256x192.py
-OUTPUT=hrnet.onnx
+OUTPUT=${MODEL}.onnx
 WEIGHT=hrnet_w32_coco_256x192-c78dce93_20200708.pth
-[ ! -f ${WEIGHT} ] && wget https://download.openmmlab.com/mmpose/top_down/hrnet/${WEIGHT} -O ${WEIGHT}
+[ ! -f ${WEIGHT} ] && wget https://download.openmmlab.com/mmpose/top_down/${MODEL}/${WEIGHT} -O ${WEIGHT}
 python3 tools/deployment/pytorch2onnx.py $NN ${WEIGHT} --opset-version 11 --shape 1 3 256 192 --output-file $OUTPUT
-chmod +x hrnet.onnx
+chmod +x ${MODEL}.onnx
 
 cd ${WORK}
-/bin/cp -rpf mmpose/hrnet.onnx $DRPAI/onnx/
-ls -l $DRPAI/onnx/hrnet.onnx
+/bin/cp -rpf mmpose/${MODEL}.onnx $DRPAI/onnx/
+ls -l $DRPAI/onnx/${MODEL}.onnx
 
 #############################
 cd ${DRPAI}
-#./run_DRP-AI_translator_V2M.sh hrnet_cam -onnx ./onnx/resnet50v1.onnx -addr ../rzv2m_drpai-sample-application_ver5.00/app_hrnet_cam_hdmi/etc/addrmap_in_hrnet.yaml #	-prepost UserConfig/sample/prepost_resnet50v1.yaml
-./run_DRP-AI_translator_V2M.sh hrnet_cam -onnx onnx/hrnet.onnx -addr ../drpai_samples/hrnet_cam/input/addrmap_in_hrnet.yaml -prepost ../drpai_samples/hrnet_cam/input/prepost_hrnet.yaml
+rm -rf output/${MODEL}_cam
+./run_DRP-AI_translator_V2M.sh ${MODEL}_cam -onnx onnx/${MODEL}.onnx -addr ../drpai_samples/${MODEL}_cam/input/addrmap_in_${MODEL}.yaml -prepost ../drpai_samples/${MODEL}_cam/input/prepost_${MODEL}.yaml
 
 #############################
 echo -e "${YELLOW}>> meta-userboard-rzv2m/recipes-demo ${NC}"
 cd ${WORK}
 rm -rf meta-userboard-rzv2m/recipes-demo/${APP_NAME}/files/${MODEL}_cam
 mkdir -p meta-userboard-rzv2m/recipes-demo/${APP_NAME}/files
-#/bin/cp -Rpf ${DRPAI}/output/${MODEL}_cam meta-userboard-rzv2m/recipes-demo/${APP_NAME}/files
-/bin/cp -Rpf rzv2m_drpai-sample-application_ver5.00/app_${MODEL}_cam_hdmi/exe/${MODEL}_cam meta-userboard-rzv2m/recipes-demo/${APP_NAME}/files
+/bin/cp -Rpf ${DRPAI}/output/${MODEL}_cam meta-userboard-rzv2m/recipes-demo/${APP_NAME}/files
+#/bin/cp -Rpf rzv2m_drpai-sample-application_ver5.00/app_${MODEL}_cam_hdmi/exe/${MODEL}_cam meta-userboard-rzv2m/recipes-demo/${APP_NAME}/files
 echo -e "${YELLOW}>> ${MODEL}_cam ${NC}"
 ls -ld --color meta-userboard-rzv2m/recipes-demo/${APP_NAME}/files/${MODEL}_cam
 ls -l --color meta-userboard-rzv2m/recipes-demo/${APP_NAME}/files/${MODEL}_cam

@@ -193,11 +193,11 @@ ${WORK}/poky/bitbake/bin/bitbake-layers show-layers
 #
 echo -e "${YELLOW}>> ${CORE_IMAGE} ${NC}"
 cd ${WORK}/build
-${WORK}/poky/bitbake/bin/bitbake app-tinyyolov2-cam-hdmi -v -c cleansstate
-${WORK}/poky/bitbake/bin/bitbake app-tinyyolov2-cam-vcd -v -c cleansstate
-${WORK}/poky/bitbake/bin/bitbake app-tinyyolov2-img -v -c cleansstate
-${WORK}/poky/bitbake/bin/bitbake app-resnet50-cam -v -c cleansstate
-${WORK}/poky/bitbake/bin/bitbake app-hrnet-cam-hdmi -v -c cleansstate
+${WORK}/poky/bitbake/bin/bitbake app-tinyyolov2-cam-hdmi -v -c cleanall
+${WORK}/poky/bitbake/bin/bitbake app-tinyyolov2-cam-vcd -v -c cleanall
+${WORK}/poky/bitbake/bin/bitbake app-tinyyolov2-img -v -c cleanall
+${WORK}/poky/bitbake/bin/bitbake app-resnet50-cam -v -c cleanall
+${WORK}/poky/bitbake/bin/bitbake app-hrnet-cam-hdmi -v -c cleanall
 ${WORK}/poky/bitbake/bin/bitbake ${CORE_IMAGE} -v
 ${WORK}/poky/bitbake/bin/bitbake flash-writer -v -c deploy
 

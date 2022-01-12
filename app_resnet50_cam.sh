@@ -30,7 +30,7 @@ ls -l --color $DRPAI/onnx/${MODEL}.onnx
 #############################
 cd ${DRPAI}
 ls -l --color ../drpai_samples/${MODEL}_cam/input/*.yaml
-rm -rfv output/${MODEL}_cam
+rm -rf output/${MODEL}_cam
 echo -e "${YELLOW}>> DRP-AI translate => ${MODEL}_cam ${NC}"
 ./run_DRP-AI_translator_V2M.sh ${MODEL}_cam \
         -onnx ./onnx/${MODEL}.onnx \
