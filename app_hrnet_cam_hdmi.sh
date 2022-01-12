@@ -51,7 +51,7 @@ cd ${WORK}
 rm -rf meta-userboard-rzv2m/recipes-demo/${APP_NAME}/files/${MODEL}_cam
 mkdir -p meta-userboard-rzv2m/recipes-demo/${APP_NAME}/files
 #/bin/cp -Rpf ${DRPAI}/output/${MODEL}_cam meta-userboard-rzv2m/recipes-demo/${APP_NAME}/files
-/bin/cp -Rpf rzv2m_drpai-sample-application_ver5.00/app_hrnet_cam_hdmi/exe/hrnet_cam meta-userboard-rzv2m/recipes-demo/${APP_NAME}/files
+/bin/cp -Rpf rzv2m_drpai-sample-application_ver5.00/app_${MODEL}_cam_hdmi/exe/${MODEL}_cam meta-userboard-rzv2m/recipes-demo/${APP_NAME}/files
 echo -e "${YELLOW}>> ${MODEL}_cam ${NC}"
 ls -ld --color meta-userboard-rzv2m/recipes-demo/${APP_NAME}/files/${MODEL}_cam
 ls -l --color meta-userboard-rzv2m/recipes-demo/${APP_NAME}/files/${MODEL}_cam
