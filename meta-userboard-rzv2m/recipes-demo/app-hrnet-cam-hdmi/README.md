@@ -1,6 +1,6 @@
-## prepost_hrnet.yaml
+## The prepost_hrnet.yaml for app-hrnet-cam-hdmi
 
-#### Install DRP-AI_Translator
+#### Install the DRP-AI_Translator
 
 ```bash
 cd ${WORK}
