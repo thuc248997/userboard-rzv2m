@@ -1,8 +1,8 @@
 ## The prepost_hrnet.yaml for app-hrnet-cam-hdmi
 
-In this section, we will prepare the `prepost_hrnet.yaml` which is necessary for `DRP-AI Translator` of `app-hrnet-cam-hdmi`.
+In this `README`, we will prepare the `prepost_hrnet.yaml` which is necessary for `DRP-AI Translator` of `app-hrnet-cam-hdmi`.
 
-#### Install the DRP-AI_Translator
+### Install the DRP-AI_Translator
 
 Install the `DRP-AI_Translator`. If `DRP-AI_Translator` had been inatalled, this step can be skipped. 
 
@@ -11,13 +11,13 @@ cd ${WORK}
 rm -rfv drp-ai_translator_release && (echo y | proprietary/DRP-AI_Translator-v1.60-Linux-x86_64-Install)
 ```
 
-#### Change to the `UserConfig/sample` folder
+### Change to the `UserConfig/sample` folder
 
 ```bash
 cd drp-ai_translator_release/UserConfig/sample
 ```
 
-#### Generate a prepost_hrnet.yaml
+### Generate a prepost_hrnet.yaml
 
 Since DRP-AI Translator finds the pre/postprocessing definition file based on the ONNX file name, rename the sample pre/postprocessing definition file.
 
@@ -25,7 +25,7 @@ Since DRP-AI Translator finds the pre/postprocessing definition file based on th
 /bin/cp -fv prepost_tiny_yolov2.yaml prepost_hrnet.yaml
 ```
 
-#### Prepare a patch file
+### Prepare a patch file
 
 Generate a patch `prepost_tinyyolov2_to_hrnet_yaml.patch` with the following content:
 
@@ -144,7 +144,7 @@ diff -Naur a/prepost_hrnet.yaml b/prepost_hrnet.yaml
 
 ```
 
-#### Patch
+### Patch
 
 Patch the `prepost_hrnet.yaml` . 
 
