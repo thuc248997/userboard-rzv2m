@@ -4,7 +4,7 @@ In this section, we will prepare the `prepost_hrnet.yaml` which is necessary for
 
 #### Install the DRP-AI_Translator
 
-Install the `DRP-AI_Translator`. If `DRP-AI_Translator` had been inatalled, we could skip this step. 
+Install the `DRP-AI_Translator`. If `DRP-AI_Translator` had been inatalled, this step can be skipped. 
 
 ```bash
 cd ${WORK}
