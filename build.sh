@@ -173,6 +173,7 @@ cd ${WORK}
 ./app_tinyyolov2_img.sh
 ./app_hrnet_cam_hdmi.sh
 ./app_resnet50_cam.sh
+./app_resnet50_img.sh
 
 ##########################################################
 #

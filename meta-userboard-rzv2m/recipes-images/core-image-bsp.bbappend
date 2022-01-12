@@ -2,8 +2,9 @@ USE_DEPMOD ?= "1"
 
 IMAGE_INSTALL_append = " \
 	app-resnet50-cam \
-	app-tinyyolov2-img \
 	app-tinyyolov2-cam-hdmi \
+	app_tinyyolov2_cam_vcd \
+	app-tinyyolov2-img \
 	app-hrnet-cam-hdmi \
 	tzdata \
 	nfs-utils \
