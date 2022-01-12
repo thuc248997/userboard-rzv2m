@@ -19,7 +19,7 @@ cd drp-ai_translator_release/UserConfig/sample
 
 #### Generate a prepost_hrnet.yaml
 
-Generate a prepost_hrnet.yaml from the given `prepost_tiny_yolov2.yaml` . 
+Since DRP-AI Translator finds the pre/postprocessing definition file based on the ONNX file name, rename the sample pre/postprocessing definition file.
 
 ```bash
 /bin/cp -fv prepost_tiny_yolov2.yaml prepost_hrnet.yaml
