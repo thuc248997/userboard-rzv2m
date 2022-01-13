@@ -106,6 +106,7 @@ if [ 0 -eq `apt list --installed 2>&1 | grep clang-3.9 | grep -v WARNING | wc -l
 	sudo apt-get install -y diffstat unzip texinfo chrpath socat cpio python python3 python3-pip python3-pexpect xz-utils debianutils iputils-ping libsdl1.2-dev xterm p7zip-full
 	sudo apt-get install -y android-tools-fsutils ccache libv8-dev pax gnutls-bin libftdi-dev
 	sudo apt-get install -y gcc-aarch64-linux-gnu tftp tftpd-hpa nfs-kernel-server nfs-common tar rar gzip bzip2 pv fbi
+	sudo apt-get install -y patchelf
 fi
 if [ 0 -eq `pip3 list | grep mmcv | wc -l` ]; then
 	pip3 install mmcv --no-warn-script-location
