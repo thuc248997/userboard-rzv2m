@@ -168,6 +168,7 @@ echo -e "${YELLOW}>> rzv2m_ai-implementation-guide ${NC}"
 ##########################################################
 #
 cd ${WORK}
+./app_yolov3_img.sh
 ./app_tinyyolov2_cam_hdmi.sh
 ./app_tinyyolov2_cam_vcd.sh
 ./app_tinyyolov2_img.sh

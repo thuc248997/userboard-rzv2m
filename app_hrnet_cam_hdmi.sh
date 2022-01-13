@@ -17,17 +17,17 @@ DRPAI=${WORK}/drp-ai_translator_release
 #############################
 cd ${WORK}
 [ ! -d drpai_samples/${MODEL}_cam -o ! -d drpai_samples/${MODEL}_jpg -o ! -d drpai_samples/${MODEL}_bmp ] && \
-        tar zxvf r11an0530ej0500-rzv2m-drpai-sp/rzv2m_ai-implementation-guide/mmpose_${MODEL}/mmpose_${MODEL}_ver5.00.tar.gz
+	tar zxvf r11an0530ej0500-rzv2m-drpai-sp/rzv2m_ai-implementation-guide/mmpose_${MODEL}/mmpose_${MODEL}_ver5.00.tar.gz
 
 #############################
 git clone -b v0.18.0 https://github.com/open-mmlab/mmpose.git || true
 cd ${WORK}/mmpose
 git checkout tools/deployment/pytorch2onnx.py && patch -p1 -l -f --fuzz 3 -i ../extra/mmpose_tools_deployment_pytorch2onnx_py.patch
 if [ 0 -eq `pip3 list | grep opencv-python-headless | grep 4.5.4.60 | wc -l` ]; then
-        pip3 install -r requirements.txt
-        sudo python3 setup.py develop
-        (pip3 uninstall opencv_python_headless -y || true) && pip3 install opencv-python-headless==4.5.4.60
-        (pip3 uninstall mmcv -y || true) && pip3 install mmcv==1.3.16
+	pip3 install -r requirements.txt
+	sudo python3 setup.py develop
+	(pip3 uninstall opencv_python_headless -y || true) && pip3 install opencv-python-headless==4.5.4.60
+	(pip3 uninstall mmcv -y || true) && pip3 install mmcv==1.3.16
 fi
 
 #############################
