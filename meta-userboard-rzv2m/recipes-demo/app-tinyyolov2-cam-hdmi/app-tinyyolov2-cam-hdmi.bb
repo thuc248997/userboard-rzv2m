@@ -28,11 +28,11 @@ INSANE_SKIP_${PN} = "ldflags"
 #INSANE_SKIP_${PN}-dev = "ldflags"
 
 do_compile_prepend() {
-        make -C ${S} clean
+	make -C ${S} clean
 }
 
 do_compile () {
-        make -C ${S}
+	make -C ${S}
 }
 
 do_install () {
@@ -46,9 +46,9 @@ do_install () {
 	install -d ${D}${sysconfdir}/systemd/system
 	install -m 0644 ${WORKDIR}/drpai_demo.service ${D}${systemd_unitdir}/system
 
-	cd ${D}${sysconfdir}/systemd/system
+	#cd ${D}${sysconfdir}/systemd/system
 	#ln -sf ../../../lib/systemd/system/drpai_demo.service .
-	cd -
+	#cd -
 }
 
 do_configure[noexec] = "1"

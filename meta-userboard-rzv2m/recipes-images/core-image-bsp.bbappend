@@ -6,6 +6,7 @@ IMAGE_INSTALL_append = " \
 	app-tinyyolov2-cam-hdmi \
 	app-tinyyolov2-cam-vcd \
 	app-tinyyolov2-img \
+	app-yolov3-img \
 	app-hrnet-cam-hdmi \
 	tzdata \
 	nfs-utils \
@@ -19,6 +20,7 @@ IMAGE_INSTALL_append = " \
 	alsa-state \
 "
 
+IMAGE_INSTALL_append = " cronie"
 IMAGE_INSTALL_append = " e2fsprogs e2fsprogs-resize2fs udev curl bc rpm usbutils"
 IMAGE_INSTALL_append = " mmc-utils squashfs-tools iputils sqlite3 libevent"
 IMAGE_INSTALL_append = " tmux yavta"

@@ -23,11 +23,11 @@ FILES_${PN} += " /home/root/app_${APP_NAME}"
 INSANE_SKIP_${PN} = "ldflags"
 
 do_compile_prepend() {
-        make -C ${S} clean
+	make -C ${S} clean
 }
 
 do_compile () {
-        make -C ${S}
+	make -C ${S}
 }
 
 do_install () {

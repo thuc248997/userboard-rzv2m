@@ -9,12 +9,14 @@ DEPENDS += " \
 "
 RDEPENDS_${PN} += " comctl"
 
-APP_MODEL = "tinyyolov2_cam"
-APP_NAME = "tinyyolov2_cam_vcd"
+APP_MODEL = "yolov3_bmp"
+APP_NAME = "yolov3_img"
 
 SRC_URI_append = " \
 	file://src/* \
 	file://${APP_MODEL}/* \
+	file://sample.bmp \
+	file://coco-labels-2014_2017.txt \
 "
 
 S = "${WORKDIR}/src"
@@ -34,6 +36,8 @@ do_install () {
 	install -d ${D}/home/root/app_${APP_NAME}/exe/${APP_MODEL}
 	install ${S}/sample_app_${APP_NAME} ${D}/home/root/app_${APP_NAME}/exe
 	install ${WORKDIR}/${APP_MODEL}/* ${D}/home/root/app_${APP_NAME}/exe/${APP_MODEL}
+	install ${WORKDIR}/sample.bmp ${D}/home/root/app_${APP_NAME}/exe
+	install ${WORKDIR}/coco-labels-2014_2017.txt ${D}/home/root/app_${APP_NAME}/exe
 }
 
 do_configure[noexec] = "1"

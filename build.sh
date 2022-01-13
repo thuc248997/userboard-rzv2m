@@ -168,13 +168,13 @@ echo -e "${YELLOW}>> rzv2m_ai-implementation-guide ${NC}"
 ##########################################################
 #
 cd ${WORK}
-./app_yolov3_img.sh
-./app_tinyyolov2_cam_hdmi.sh
-./app_tinyyolov2_cam_vcd.sh
-./app_tinyyolov2_img.sh
-./app_hrnet_cam_hdmi.sh
-./app_resnet50_cam.sh
-./app_resnet50_img.sh
+[ ! -e meta-userboard-rzv2m/recipes-demo/app-yolov3-img/files/yolov3_bmp/yolov3_bmp_weight.dat ] && ./app_yolov3_img.sh
+[ ! -e meta-userboard-rzv2m/recipes-demo/app-tinyyolov2-cam-hdmi/files/tinyyolov2_cam/tinyyolov2_cam_weight.dat ] && ./app_tinyyolov2_cam_hdmi.sh
+[ ! -e meta-userboard-rzv2m/recipes-demo/app-tinyyolov2-cam-vcd/files/tinyyolov2_cam/tinyyolov2_cam_weight.dat ] && ./app_tinyyolov2_cam_vcd.sh
+[ ! -e meta-userboard-rzv2m/recipes-demo/app-tinyyolov2-img/files/tinyyolov2_bmp/tinyyolov2_bmp_weight.dat ] && ./app_tinyyolov2_img.sh
+[ ! -e meta-userboard-rzv2m/recipes-demo/app-hrnet-cam-hdmi/files/hrnet_cam/hrnet_cam_weight.dat ] && ./app_hrnet_cam_hdmi.sh
+[ ! -e meta-userboard-rzv2m/recipes-demo/app-resnet50-cam/files/resnet50_cam/resnet50_cam_weight.dat ] && ./app_resnet50_cam.sh
+[ ! -e meta-userboard-rzv2m/recipes-demo/app-resnet50-img/files/resnet50_bmp/resnet50_bmp_weight.dat ] && ./app_resnet50_img.sh
 
 ##########################################################
 #
@@ -195,6 +195,7 @@ ${WORK}/poky/bitbake/bin/bitbake-layers show-layers
 #
 echo -e "${YELLOW}>> ${CORE_IMAGE} ${NC}"
 cd ${WORK}/build
+${WORK}/poky/bitbake/bin/bitbake app-yolov3-img -v -c cleanall
 ${WORK}/poky/bitbake/bin/bitbake app-tinyyolov2-cam-hdmi -v -c cleanall
 ${WORK}/poky/bitbake/bin/bitbake app-tinyyolov2-cam-vcd -v -c cleanall
 ${WORK}/poky/bitbake/bin/bitbake app-tinyyolov2-img -v -c cleanall
